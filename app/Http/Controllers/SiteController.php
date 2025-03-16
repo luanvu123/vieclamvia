@@ -10,4 +10,7 @@ class SiteController extends Controller
     {
         return view('pages.home');
     }
+    public function checkout(){
+        return view('pages.checkout');
+    }
 }

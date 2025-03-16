@@ -86,7 +86,7 @@
                             <label for="Balance">Số dư *</label>
                             <div class="input-group">
                                 <input type="number" class="form-control @error('Balance') is-invalid @enderror"
-                                    id="Balance" name="Balance" value="{{ old('Balance', $customerManage->Balance) }}"
+                                    id="Balance" name="Balance" value="{{ old('Balance', $customerManage->balance) }}"
                                     readonly>
                                 <div class="input-group-append">
                                     <span class="input-group-text">VNĐ</span>
@@ -120,35 +120,7 @@
                             @enderror
                         </div>
 
-                        <div class="form-group">
-                            <label for="isEkyc">Xác thực eKYC *</label>
-                            <select class="form-control @error('isEkyc') is-invalid @enderror" id="isEkyc" name="isEkyc"
-                                required>
-                                <option value="1" {{ old('isEkyc', $customerManage->isEkyc) == 1 ? 'selected' : '' }}>
-                                    Đã xác thực</option>
-                                <option value="0" {{ old('isEkyc', $customerManage->isEkyc) == 0 ? 'selected' : '' }}>
-                                    Chưa xác thực</option>
-                            </select>
-                            @error('isEkyc')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
-                        </div>
 
-                        <div class="form-group">
-                            <label for="isTelegram">Sử dụng Telegram</label>
-                            <select class="form-control" id="isTelegram" name="isTelegram">
-                                <option value="1" {{ $customerManage->isTelegram ? 'selected' : '' }}>Có</option>
-                                <option value="0" {{ !$customerManage->isTelegram ? 'selected' : '' }}>Không</option>
-                            </select>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="isApi">Sử dụng API</label>
-                            <select class="form-control" id="isApi" name="isApi">
-                                <option value="1" {{ $customerManage->isApi ? 'selected' : '' }}>Có</option>
-                                <option value="0" {{ !$customerManage->isApi ? 'selected' : '' }}>Không</option>
-                            </select>
-                        </div>
 
                         <div class="form-group">
                             <label for="is2Fa">Xác thực hai yếu tố (2FA)</label>
@@ -161,38 +133,6 @@
                         </div>
                     </div>
                 </div>
-
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="Front_ID_card_image">Ảnh mặt trước CMND</label>
-                            <input type="file" class="form-control" id="Front_ID_card_image" name="Front_ID_card_image">
-                            @if ($customerManage->Front_ID_card_image)
-                                <img src="{{ asset($customerManage->Front_ID_card_image) }}" alt="Front ID"
-                                    class="img-thumbnail mt-2" width="100">
-                            @endif
-                        </div>
-
-                        <div class="form-group">
-                            <label for="Back_ID_card_image">Ảnh mặt sau CMND</label>
-                            <input type="file" class="form-control" id="Back_ID_card_image" name="Back_ID_card_image">
-                            @if ($customerManage->Back_ID_card_image)
-                                <img src="{{ asset($customerManage->Back_ID_card_image) }}" alt="Back ID"
-                                    class="img-thumbnail mt-2" width="100">
-                            @endif
-                        </div>
-
-                        <div class="form-group">
-                            <label for="Portrait_image">Ảnh chân dung</label>
-                            <input type="file" class="form-control" id="Portrait_image" name="Portrait_image">
-                            @if ($customerManage->Portrait_image)
-                                <img src="{{ asset($customerManage->Portrait_image) }}" alt="Portrait"
-                                    class="img-thumbnail mt-2" width="100">
-                            @endif
-                        </div>
-                    </div>
-                </div>
-
                 <div class="mt-4">
                     <button type="submit" class="btn btn-primary">
                         <i class="fas fa-save"></i> Lưu thay đổi

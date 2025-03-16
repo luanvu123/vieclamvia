@@ -149,10 +149,55 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
                                                     alt="Google" width="20" height="20">Thể loại
                                             </a>
                                         </li>
+                                           <li class="{{ Request::is('genre_posts*') ? 'active' : '' }}">
+                                            <a href="{{ route('genre_posts.index') }}">
+                                                <img src="{{ asset('backend_admin/images/file-document-svgrepo-com.svg') }}"
+                                                    alt="Google" width="20" height="20"> Thể loại bài viết
+                                            </a>
+                                        </li>
+                                          <li class="treeview {{ Request::is('type_customers*') ? 'active' : '' }}">
+                                    <a href="{{ route('type_customers.index') }}">
+                                        <img src="{{ asset('backend_admin/images/support-svgrepo-com.svg') }}" alt="Google"
+                                            width="20" height="20"> Loại khách hàng
+                                    </a>
+                                </li>
                                     </ul>
 
                                 </li>
+                                   <li class="treeview {{ Request::is('customer-manage*') ? 'active' : '' }}">
+                                    <a href="{{ route('customer-manage.index') }}">
+                                        <img src="{{ asset('backend_admin/images/candidate-for-elections-svgrepo-com.svg') }}"
+                                            alt="Google" width="20" height="20">
+                                        <span> Khách hàng</span>
 
+                                        @if (Auth::check())
+                                                                        @php
+                                                                            $recentCustomerCount = \App\Models\Customer::where('created_at', '>=', \Carbon\Carbon::now()->subDay())->count();
+                                                                        @endphp
+
+                                                                        @if ($recentCustomerCount > 0)
+                                                                            <span
+                                                                                class="label label-primary pull-right">{{ str_pad($recentCustomerCount, 2, '0', STR_PAD_LEFT) }}</span>
+
+                                                                        @endif
+                                        @endif
+                                    </a>
+                                </li>
+@if (Auth::check())
+    @php
+        $recentPostCount = \App\Models\Post::where('created_at', '>=', \Carbon\Carbon::now()->subDay())->count();
+    @endphp
+
+    <li class="{{ Request::is('post*') ? 'active' : '' }}">
+        <a href="{{ route('posts.index') }}">
+            <img src="{{ asset('backend_admin/images/register-svgrepo-com.svg') }}"
+                alt="Quản lý bài viết" width="20" height="20"> Quản lý bài viết
+            @if ($recentPostCount > 0)
+                <span class="label label-primary pull-right">{{ $recentPostCount }}</span>
+            @endif
+        </a>
+    </li>
+@endif
 
 
 

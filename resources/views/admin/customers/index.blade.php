@@ -16,7 +16,7 @@
                             <th>SĐT</th>
                             <th>Số dư</th>
                             <th>Trạng thái</th>
-                            <th>eKYC</th>
+                           
                             <th>Thao tác</th>
                         </tr>
                     </thead>
@@ -32,28 +32,19 @@
 
                                 <td>
 
-                                    <a href="{{ route('messages.create', ['customerId' => $customer->id]) }}"
-                                        class="text-primary">
-                                        {{ $customer->name }}
-                                    </a>
 
-                                    @if ($customer->email == 'bgntmrqph24111516@vnetwork.io.vn')
-                                        <i class="fa fa-check-circle" style="color:red; font-size: 80%;" title="Thuộc hệ thống"></i>
-                                    @endif
+                                        {{ $customer->name }}
+
                                 </td>
                                 <td>{{ $customer->email }}</td>
                                 <td>{{ $customer->phone }}</td>
-                                <td>{{ number_format($customer->Balance) }} VNĐ</td>
+                                <td>{{ number_format($customer->balance) }} VNĐ</td>
                                 <td>
                                     <span class="badge {{ $customer->Status ? 'badge-success' : 'badge-danger' }}">
                                         {{ $customer->Status ? 'Hoạt động' : 'Bị khóa' }}
                                     </span>
                                 </td>
-                                <td>
-                                    <span class="badge {{ $customer->isEkyc ? 'badge-success' : 'badge-warning' }}">
-                                        {{ $customer->isEkyc ? 'Đã xác thực' : 'Chưa xác thực' }}
-                                    </span>
-                                </td>
+
                                 <td>
                                     <a href="{{ route('customer-manage.edit', $customer->id) }}" class="btn btn-primary btn-sm">
                                         <i class="fas fa-edit"></i> Sửa

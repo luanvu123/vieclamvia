@@ -15,6 +15,7 @@ return new class extends Migration {
             $table->foreignId('type_customer_id')->nullable()->constrained()->onDelete('set null'); // Liên kết với bảng type_customers
             $table->string('email')->unique();
             $table->string('name');
+            $table->string('password');
             $table->string('phone')->nullable();
             $table->boolean('is2Fa')->default(false);
             $table->string('google2fa_secret')->nullable();

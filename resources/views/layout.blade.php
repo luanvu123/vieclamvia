@@ -27,7 +27,8 @@
 
 
 
-    <meta name="csrf-token" content="Doa1NLMYo8EVl8dfgaiD9kNHDQNjY0kAm93kce7C">
+
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <!-- Favicon-->
     <link rel="shortcut icon" href="{{asset('imgs/LogoT11ab-removebg-preview.png')}}">
@@ -163,65 +164,210 @@
                                 </span>
                             </div>
                         </div>
-                        <li class="dropdown dropdown-animated scale-left">
-                            <div class="pointer" data-toggle="dropdown">
-                                <div class="avatar avatar-image  m-h-10 m-r-15">
-                                    <img src="{{asset('imgs/verify-user.svg')}}" width="48" height="48" alt="User" />
+
+                        @if (Auth::guard('customer')->check())
+                            <!-- Menu thả xuống khi đã đăng nhập -->
+                            <li class="dropdown dropdown-animated scale-left">
+                                <div class="pointer" data-toggle="dropdown">
+                                    <div class="avatar avatar-image m-h-10 m-r-15">
+                                        <img src="{{ asset('imgs/verify-user.svg') }}" width="48" height="48" alt="User" />
+                                    </div>
+                                </div>
+
+                                <div class="p-b-15 p-t-20 dropdown-menu pop-profile">
+                                    <div class="p-h-20 p-b-15 m-b-10 border-bottom">
+                                        <div class="d-flex m-r-50">
+                                            <div class="avatar avatar-lg avatar-image">
+                                                <img src="{{ asset('imgs/verify-user.svg') }}" width="48" height="48"
+                                                    alt="User" />
+                                            </div>
+                                            <div class="m-l-10">
+                                                <p class="m-b-0 text-dark font-weight-semibold">
+                                                    {{ Auth::guard('customer')->user()->name ?? 'Tên người dùng' }}</p>
+                                                <p class="m-b-0 opacity-07">KHÁCH HÀNG</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <a href="{{ route('profile.site') }}" class="dropdown-item d-block p-h-15 p-v-10">
+                                        <div class="d-flex align-items-center justify-content-between">
+                                            <div>
+                                                <i class="anticon opacity-04 font-size-16 anticon-user"></i>
+                                                <span class="m-l-10">Sửa hồ sơ</span>
+                                            </div>
+                                            <i class="anticon font-size-10 anticon-right"></i>
+                                        </div>
+                                    </a>
+                                    <a href="{{route('checkout')}}" class="dropdown-item d-block p-h-15 p-v-10">
+                                        <div class="d-flex align-items-center justify-content-between">
+                                            <div>
+                                                <i class="anticon opacity-04 font-size-16 anticon-lock"></i>
+                                                <span class="m-l-10">Nạp tiền</span>
+                                            </div>
+                                            <i class="anticon font-size-10 anticon-right"></i>
+                                        </div>
+                                    </a>
+                                    <a href="https://vlclone.com/profile" class="dropdown-item d-block p-h-15 p-v-10">
+                                        <div class="d-flex align-items-center justify-content-between">
+                                            <div>
+                                                <i class="anticon opacity-04 font-size-16 anticon-project"></i>
+                                                <span class="m-l-10">Đổi mật khẩu</span>
+                                            </div>
+                                            <i class="anticon font-size-10 anticon-right"></i>
+                                        </div>
+                                    </a>
+                                    <a href="javascript:void(0);" onclick="onLogout()"
+                                        class="dropdown-item d-block p-h-15 p-v-10">
+                                        <div class="d-flex align-items-center justify-content-between">
+                                            <div>
+                                                <i class="anticon opacity-04 font-size-16 anticon-logout"></i>
+                                                <span class="m-l-10">Đăng xuất</span>
+                                            </div>
+                                            <i class="anticon font-size-10 anticon-right"></i>
+                                        </div>
+                                    </a>
+                                </div>
+                            </li>
+                        @else
+                            <button class="btn" id="registerBtn">Đăng ký</button>
+                            <button class="btn" id="loginBtn">Đăng nhập</button>
+
+                            <!-- Registration and Login Modal -->
+                            <div id="modal" class="modal">
+                                <div class="modal-content">
+                                    <span class="close-btn">&times;</span>
+                                    <h2 id="modalTitle">Đăng ký</h2>
+                                    <form id="authForm" method="POST" action="/customer/register">
+                                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                        <div class="form-group" id="fullNameGroup">
+                                            <label for="fullName">Họ và Tên</label>
+                                            <input type="text" id="fullName" name="name">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="email">Email</label>
+                                            <input type="email" id="email" name="email" required>
+                                        </div>
+                                        <div class="form-group" id="phoneGroup">
+                                            <label for="phone">Số Điện Thoại</label>
+                                            <input type="tel" id="phone" name="phone">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="password">Mật Khẩu</label>
+                                            <input type="password" id="password" name="password" required>
+                                        </div>
+                                        <div class="form-group" id="passwordConfirmGroup">
+                                            <label for="password_confirmation">Xác Nhận Mật Khẩu</label>
+                                            <input type="password" id="password_confirmation" name="password_confirmation">
+                                        </div>
+                                        <div class="form-group" id="agreeGroup">
+                                            <input type="checkbox" id="agree">
+                                            <label for="agree">Tôi đã đọc và đồng ý với điều khoản</label>
+                                        </div>
+                                        <button type="submit" class="btn">Gửi</button>
+                                    </form>
+
+                                    <p id="toggleText">Đã có tài khoản? <span id="toggleLink">Đăng nhập</span></p>
                                 </div>
                             </div>
 
-                            <div class="p-b-15 p-t-20 dropdown-menu pop-profile">
-                                <div class="p-h-20 p-b-15 m-b-10 border-bottom">
-                                    <div class="d-flex m-r-50">
-                                        <div class="avatar avatar-lg avatar-image">
-                                            <img src="{{asset('imgs/verify-user.svg')}}" width="48" height="48"
-                                                alt="User" />
-                                        </div>
-                                        <div class="m-l-10">
-                                            <p class="m-b-0 text-dark font-weight-semibold">zrtbyybbj24100816</p>
-                                            <p class="m-b-0 opacity-07">KHÁCH HÀNG</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <a href="https://vlclone.com/profile" class="dropdown-item d-block p-h-15 p-v-10">
-                                    <div class="d-flex align-items-center justify-content-between">
-                                        <div>
-                                            <i class="anticon opacity-04 font-size-16 anticon-user"></i>
-                                            <span class="m-l-10">Sửa hồ sơ</span>
-                                        </div>
-                                        <i class="anticon font-size-10 anticon-right"></i>
-                                    </div>
-                                </a>
-                                <a href="https://vlclone.com/payments" class="dropdown-item d-block p-h-15 p-v-10">
-                                    <div class="d-flex align-items-center justify-content-between">
-                                        <div>
-                                            <i class="anticon opacity-04 font-size-16 anticon-lock"></i>
-                                            <span class="m-l-10">Nạp tiền</span>
-                                        </div>
-                                        <i class="anticon font-size-10 anticon-right"></i>
-                                    </div>
-                                </a>
-                                <a href="https://vlclone.com/profile" class="dropdown-item d-block p-h-15 p-v-10">
-                                    <div class="d-flex align-items-center justify-content-between">
-                                        <div>
-                                            <i class="anticon opacity-04 font-size-16 anticon-project"></i>
-                                            <span class="m-l-10">Đổi mật khẩu</span>
-                                        </div>
-                                        <i class="anticon font-size-10 anticon-right"></i>
-                                    </div>
-                                </a>
-                                <a href="javascript:void(0);" onclick="onLogout()"
-                                    class="dropdown-item d-block p-h-15 p-v-10">
-                                    <div class="d-flex align-items-center justify-content-between">
-                                        <div>
-                                            <i class="anticon opacity-04 font-size-16 anticon-logout"></i>
-                                            <span class="m-l-10">Đăng xuất</span>
-                                        </div>
-                                        <i class="anticon font-size-10 anticon-right"></i>
-                                    </div>
-                                </a>
-                            </div>
-                        </li>
+                            <script>
+                                document.addEventListener('DOMContentLoaded', function () {
+                                    const modal = document.getElementById('modal');
+                                    const registerBtn = document.getElementById('registerBtn');
+                                    const loginBtn = document.getElementById('loginBtn');
+                                    const authForm = document.getElementById('authForm');
+                                    const modalTitle = document.getElementById('modalTitle');
+                                    const toggleText = document.getElementById('toggleText');
+                                    const fullNameGroup = document.getElementById('fullNameGroup');
+                                    const phoneGroup = document.getElementById('phoneGroup');
+                                    const passwordConfirmGroup = document.getElementById('passwordConfirmGroup');
+                                    const agreeGroup = document.getElementById('agreeGroup');
+                                    const closeBtn = document.querySelector('.close-btn');
+
+                                    function showModal(isRegister) {
+                                        modal.style.display = 'block';
+                                        if (isRegister) {
+                                            modalTitle.innerText = 'Đăng ký';
+                                            authForm.action = '/customer/register';
+                                            fullNameGroup.style.display = 'block';
+                                            phoneGroup.style.display = 'block';
+                                            passwordConfirmGroup.style.display = 'block';
+                                            agreeGroup.style.display = 'block';
+                                            toggleText.innerHTML = 'Đã có tài khoản? <span id="toggleLink">Đăng nhập</span>';
+                                        } else {
+                                            modalTitle.innerText = 'Đăng nhập';
+                                            authForm.action = '/customer/login';
+                                            fullNameGroup.style.display = 'none';
+                                            phoneGroup.style.display = 'none';
+                                            passwordConfirmGroup.style.display = 'none';
+                                            agreeGroup.style.display = 'none';
+                                            toggleText.innerHTML = 'Chưa có tài khoản? <span id="toggleLink">Đăng ký</span>';
+                                        }
+                                        attachToggleEvent();
+                                    }
+
+                                    function hideModal() {
+                                        modal.style.display = 'none';
+                                        authForm.reset();
+                                    }
+
+                                    function attachToggleEvent() {
+                                        document.getElementById('toggleLink').onclick = function () {
+                                            if (modalTitle.innerText === 'Đăng ký') {
+                                                showModal(false);
+                                            } else {
+                                                showModal(true);
+                                            }
+                                        };
+                                    }
+
+                                    registerBtn.onclick = function () {
+                                        showModal(true);
+                                    };
+
+                                    loginBtn.onclick = function () {
+                                        showModal(false);
+                                    };
+
+                                    window.onclick = function (event) {
+                                        if (event.target === modal) {
+                                            hideModal();
+                                        }
+                                    };
+
+                                    closeBtn.onclick = function () {  // Thêm phần này để xử lý sự kiện nhấn nút đóng
+                                        hideModal();
+                                    };
+
+                                    authForm.onsubmit = async function (e) {
+                                        e.preventDefault();
+                                        const url = authForm.action;
+                                        const formData = new FormData(authForm);
+
+                                        try {
+                                            const response = await fetch(url, {
+                                                method: 'POST',
+                                                headers: {
+                                                    'X-CSRF-TOKEN': document.querySelector('input[name="_token"]').value
+                                                },
+                                                body: formData
+                                            });
+                                            const result = await response.json();
+
+                                            if (response.ok) {
+                                                alert(result.message);
+                                                location.reload();
+                                            } else {
+                                                alert('Đã xảy ra lỗi! Vui lòng kiểm tra lại thông tin.');
+                                            }
+                                        } catch (error) {
+                                            alert('Đã xảy ra lỗi kết nối!');
+                                        }
+                                    };
+                                });
+
+                            </script>
+                        @endif
+
                     </ul>
                 </div>
             </div>
@@ -229,19 +375,6 @@
             <div class="side-nav">
                 <div class="side-nav-inner">
                     <ul class="side-nav-menu scrollable">
-                        <li class="user-info">
-                            <div class="image">
-                                <img src="{{asset('imgs/verify-user.svg')}}" width="48" height="48" alt="User" />
-                            </div>
-                            <div class="info-container">
-                                <div class="name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <span>zrtbyybbj24100816 </span> - KHÁCH HÀNG
-                                </div>
-                                <div class="info-22">
-                                    <span>0</span>
-                                </div>
-                            </div>
-                        </li>
                         <li class="header-nav">Menu</li>
                         <li class="nav-item">
                             <a href="https://vlclone.com">
@@ -271,7 +404,6 @@
                                 </span>
                             </a>
                             <ul class="dropdown-menu">
-
                                 <li class="dropdown">
                                     <a class="dropdown-toggle" href="javascript:void(0);"
                                         data-link="https://vlclone.com/shop/4">
@@ -528,7 +660,7 @@
             <!-- Side Nav END -->
 
             <section class="page-container">
-                 @yield('content')
+                @yield('content')
             </section>
         </div>
     </div>
@@ -589,7 +721,7 @@
 
         </div>
     </div>
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="{{asset('js/vendors.min.js')}}"></script>
     <script src="{{asset('js/common.js')}}"></script>
     <script src="{{asset('js/user.js')}}"></script>
@@ -598,7 +730,15 @@
     <script src="{{asset('plugins/vue/bootstrap-vue.min.js')}}"></script>
     <script src="{{asset('plugins/axios/axios.min.js')}}"></script>
     <script src="{{asset('js/shop.js')}}"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/2.0.8/css/dataTables.dataTables.min.css">
 
+    <!-- Include DataTables JavaScript -->
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/2.0.8/js/dataTables.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#user_log').DataTable();
+        });
+    </script>
 
 </body>
 

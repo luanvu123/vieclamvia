@@ -33,7 +33,8 @@ class Customer extends Authenticatable
         'isEkyc',
         'last_active_at',
         'account_number',
-        'isSeller'
+        'isSeller',
+         'type_customer_id'
 
     ];
 
@@ -55,4 +56,15 @@ class Customer extends Authenticatable
 
         return $idCustomer;
     }
+     public function loginHistories()
+    {
+        return $this->hasMany(LoginHistory::class);
+    }
+    // App\Models\Customer.php
+
+public function typeCustomer()
+{
+    return $this->belongsTo(TypeCustomer::class, 'type_customer_id');
+}
+
 }
