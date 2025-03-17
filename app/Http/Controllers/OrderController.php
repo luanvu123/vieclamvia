@@ -41,7 +41,7 @@ class OrderController extends Controller
             'product_id' => $product->id,
             'quantity' => $request->quantity,
             'total_price' => $totalPrice,
-            'status' => 'success',
+            'status' => 'completed',
         ]);
 
         // Lấy các stock cần thiết và tạo order_detail tương ứng

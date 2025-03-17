@@ -11,7 +11,7 @@ class Order extends Model
     use HasFactory;
 
     protected $fillable = [
-         'order_key',
+        'order_key',
         'customer_id',
         'product_id',
         'quantity',
@@ -19,7 +19,7 @@ class Order extends Model
         'status',
     ];
 
-     protected static function boot()
+    protected static function boot()
     {
         parent::boot();
 
@@ -41,7 +41,7 @@ class Order extends Model
     {
         return $this->belongsTo(Product::class);
     }
-     public function orderDetails(): HasMany
+    public function orderDetails(): HasMany
     {
         return $this->hasMany(OrderDetail::class);
     }
