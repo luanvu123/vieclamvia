@@ -9,6 +9,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use PragmaRX\Google2FA\Google2FA;
+use PDF;
+use Carbon\Carbon;
 class CustomerController extends Controller
 {
     public function profile()
@@ -40,17 +42,20 @@ class CustomerController extends Controller
         return view('pages.deposit', compact('deposits', 'customer'));
     }
 
-    public function indexOrderDetail($id)
-    {
-        $customer = Auth::guard('customer')->user();
-        $order = Order::where('id', $id)
-            ->where('customer_id', $customer->id)
-            ->firstOrFail();
+   public function indexOrderDetail($id)
+{
+    $customer = Auth::guard('customer')->user();
+    $order = Order::where('id', $id)->firstOrFail();
 
-        $orderDetails = $order->orderDetails()->get();
-
-        return view('pages.order_detail', compact('order', 'orderDetails', 'customer'));
+    if ($order->customer_id != $customer->id) {
+        abort(403, 'Bạn không có quyền truy cập đơn hàng này.');
     }
+
+    $orderDetails = $order->orderDetails()->get();
+
+    return view('pages.order_detail', compact('order', 'orderDetails', 'customer'));
+}
+
     public function bank()
     {
         $customer = Auth::guard('customer')->user()->load('typeCustomer');
@@ -289,4 +294,100 @@ class CustomerController extends Controller
 
         return view('pages.genre_posts', compact('genre', 'posts'));
     }
+
+    /**
+ * Tìm kiếm đơn hàng
+ */
+public function searchOrders(Request $request)
+{
+    $customer = Auth::guard('customer')->user();
+    $query = Order::where('customer_id', $customer->id);
+
+    // Tìm theo mã đơn hàng
+    if ($request->filled('orderKey')) {
+        $query->where('order_key', 'like', '%' . $request->orderKey . '%');
+    }
+
+    // Tìm theo trạng thái
+    if ($request->filled('status')) {
+        $query->where('status', $request->status);
+    }
+
+    // Tìm theo khoảng thời gian
+    if ($request->filled('dateRange')) {
+        $dates = explode(' - ', $request->dateRange);
+        if (count($dates) == 2) {
+            $startDate = Carbon::createFromFormat('d/m/Y', $dates[0])->startOfDay();
+            $endDate = Carbon::createFromFormat('d/m/Y', $dates[1])->endOfDay();
+            $query->whereBetween('created_at', [$startDate, $endDate]);
+        }
+    }
+
+    $orders = $query->orderBy('created_at', 'desc')->get();
+
+    // Chuẩn bị dữ liệu để trả về dạng JSON
+    $formattedOrders = [];
+    foreach ($orders as $order) {
+        $status_html = '';
+        if ($order->status == 'completed') {
+            $status_html = '<span class="badge badge-success">Hoàn thành</span>';
+        } elseif ($order->status == 'pending') {
+            $status_html = '<span class="badge badge-warning">Đang xử lý</span>';
+        } elseif ($order->status == 'cancelled') {
+            $status_html = '<span class="badge badge-danger">Đã hủy</span>';
+        } else {
+            $status_html = '<span class="badge badge-secondary">' . $order->status . '</span>';
+        }
+
+        $actions = '<a href="' . route('customer.order.detail', $order->id) . '" class="btn btn-primary btn-sm"><i class="anticon anticon-eye"></i> Chi tiết</a>';
+
+        if ($order->status == 'completed') {
+            $actions .= ' <a href="#" class="btn btn-info btn-sm download-order" data-id="' . $order->id . '"><i class="anticon anticon-download"></i> Tải xuống</a>';
+        }
+
+        $formattedOrders[] = [
+            'order_key' => $order->order_key,
+            'created_at' => $order->created_at->format('d/m/Y H:i'),
+            'product_name' => $order->product->name,
+            'quantity' => $order->quantity,
+            'total_price_formatted' => number_format($order->total_price) . ' VNĐ',
+            'status_html' => $status_html,
+            'actions' => $actions
+        ];
+    }
+
+    return response()->json(['orders' => $formattedOrders]);
+}
+
+/**
+ * Tải xuống đơn hàng
+ */
+/**
+ * Tải xuống đơn hàng dưới dạng txt
+ */
+public function downloadOrder($id)
+{
+    $customer = Auth::guard('customer')->user();
+    $order = Order::where('id', $id)
+                ->where('customer_id', $customer->id)
+                ->where('status', 'completed')
+                ->firstOrFail();
+
+    $orderDetails = $order->orderDetails()->get();
+
+    // Tạo nội dung file txt với mỗi dòng là UUID|Giá trị
+    $content = '';
+    foreach ($orderDetails as $detail) {
+        $content .= $detail->uuid . '|' . $detail->value . "\n";
+    }
+
+    // Tạo response và tải xuống file
+    $filename = 'don-hang-' . $order->order_key . '.txt';
+    $headers = [
+        'Content-Type' => 'text/plain',
+        'Content-Disposition' => 'attachment; filename="' . $filename . '"',
+    ];
+
+    return response($content, 200, $headers);
+}
 }

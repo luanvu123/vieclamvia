@@ -46,7 +46,7 @@ Route::post('/customer/logout', [CustomerAuthController::class, 'logout'])->name
 Route::group(['middleware' => ['auth']], function () {
     Route::resource('users', UserController::class);
     Route::resource('support', SupportController::class);
-   Route::resource('order-manage', OrderManageController::class);
+    Route::resource('order-manage', OrderManageController::class);
 
     Route::resource('genre_posts', GenrePostController::class);
     Route::resource('posts', PostController::class);
@@ -65,7 +65,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::resource('subcategories', SubCategoryController::class);
     Route::resource('customer-manage', CustomerManageController::class);
     Route::post('/customer-manage/deposit', [CustomerManageController::class, 'storeDeposit'])->name('customer-manage.storeDeposit');
-Route::get('/info/edit', [InfoController::class, 'edit'])->name('info.edit');
+    Route::get('/info/edit', [InfoController::class, 'edit'])->name('info.edit');
     Route::put('/info/update', [InfoController::class, 'update'])->name('info.update');
     Route::get('/customer-manage/deposits/{customerId}', [CustomerManageController::class, 'indexDeposit'])->name('customer-manage.deposits');
 });
@@ -82,11 +82,11 @@ Route::middleware(['customer'])->group(function () {
     Route::post('/order/store', [OrderController::class, 'store'])->middleware('auth:customer')->name('order.store');
     Route::get('/blogs/{genreSlug}/{postSlug}', [CustomerController::class, 'postDetail'])->name('post.detail');
     Route::get('/danh-muc/{genre}', [CustomerController::class, 'genreShow']);
-      Route::get('/orders', [CustomerController::class, 'indexOrder'])->name('customer.orders');
+    Route::get('/orders', [CustomerController::class, 'indexOrder'])->name('customer.orders');
     Route::get('/orders/{id}', [CustomerController::class, 'indexOrderDetail'])->name('customer.order.detail');
     Route::post('/orders/search', [CustomerController::class, 'searchOrders'])->name('customer.orders.search');
-Route::get('/orders/{id}/download', [CustomerController::class, 'downloadOrder'])->name('customer.order.download');
- Route::get('/customer/deposits', [CustomerController::class, 'indexDeposit'])->name('customer.deposits.index');
+    Route::get('/orders/{id}/download', [CustomerController::class, 'downloadOrder'])->name('customer.order.download');
+    Route::get('/customer/deposits', [CustomerController::class, 'indexDeposit'])->name('customer.deposits.index');
 
 
 });

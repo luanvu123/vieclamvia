@@ -34,21 +34,22 @@
                             <table class="table table-bordered table-accounts mb-3">
                                 <thead>
                                     <tr>
-                                        <th>{{ $subcategory->name }}</th>
-                                        <th>Tên Sản Phẩm</th>
-                                        <th>Mô Tả</th>
-                                        <th>Còn</th>
-                                        <th>Giá</th>
-                                        <th></th>
+                                        <th style="text-align: center; width: 40px;">#</th>
+                                        <th class="col-category-name">{{ $subcategory->name }}</th>
+                                        <th class="col-description">Mô Tả</th>
+                                        <th style="text-align: center; width: 70px;">Còn</th>
+                                        <th style="width: 100px;">Giá</th>
+                                        <th style="width: 50px;"></th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @foreach($subcategory->products as $product)
                                         <tr class="{{ $product->quantity > 0 ? 'c_pointer' : '' }}">
+                                            <td> <img src="{{ asset('storage/' . $product->image) }}" alt="" height="15"></td>
                                             <td>
-                                                <img src="{{ asset('storage/' . $product->image) }}" alt="" height="15">
+
+                                                {{ $product->name }}
                                             </td>
-                                            <td>{{ $product->name }}</td>
                                             <td>{{ $product->short_description ?? 'Không có mô tả' }}</td>
                                             <td class="{{ $product->quantity <= 0 ? 'text-danger' : '' }}">
                                                 {{ $product->quantity }}

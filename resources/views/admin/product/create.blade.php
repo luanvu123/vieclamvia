@@ -37,11 +37,12 @@
             <label for="short_description">Mô Tả Ngắn</label>
             <textarea name="short_description" class="form-control" rows="2"></textarea>
         </div>
+<!-- Số Lượng (Ẩn) -->
+<div class="form-group" style="display: none;">
+    <label for="quantity">Số Lượng</label>
+    <input type="number" name="quantity" class="form-control" value="1" required>
+</div>
 
-        <div class="form-group">
-            <label for="quantity">Số Lượng</label>
-            <input type="number" name="quantity" class="form-control" required>
-        </div>
 
         <div class="form-group">
             <label for="price">Giá</label>

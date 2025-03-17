@@ -74,7 +74,7 @@
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
-                        <table class="table table-bordered table-hover">
+                        <table class="table table-bordered table-hover" id="user_log">
                             <thead>
                                 <tr>
                                     <th>ID</th>
@@ -85,9 +85,9 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @forelse($orderDetails as $detail)
+                                @forelse($orderDetails as $key=> $detail)
                                     <tr>
-                                        <td>{{ $detail->id }}</td>
+                                        <td>{{ $key }}</td>
                                         <td>
                                             <span class="text-primary">{{ $detail->uuid }}</span>
                                             <button class="btn btn-sm btn-outline-secondary copy-btn" data-clipboard-text="{{ $detail->uuid }}">
@@ -96,12 +96,12 @@
                                         </td>
                                         <td>{{ $detail->value }}</td>
                                         <td>
-                                            @if($detail->status == 'active')
-                                                <span class="badge badge-success">Hoạt động</span>
-                                            @elseif($detail->status == 'used')
-                                                <span class="badge badge-warning">Đã sử dụng</span>
-                                            @elseif($detail->status == 'expired')
-                                                <span class="badge badge-danger">Hết hạn</span>
+                                            @if($detail->status == 'success')
+                                                <span class="badge badge-success">Thành công</span>
+                                            @elseif($detail->status == 'error')
+                                                <span class="badge badge-warning">Lỗi</span>
+                                            @elseif($detail->status == 'warranty')
+                                                <span class="badge badge-danger">Bảo trì</span>
                                             @else
                                                 <span class="badge badge-secondary">{{ $detail->status }}</span>
                                             @endif
@@ -122,7 +122,7 @@
             @if($order->status == 'completed')
                 <div class="mt-4">
                     <a href="{{ route('customer.order.download', $order->id) }}" class="btn btn-success">
-                        <i class="anticon anticon-download"></i> Tải xuống đơn hàng
+                        <i class="anticon anticon-download"></i> Tải xuống TXT
                     </a>
                 </div>
             @endif
