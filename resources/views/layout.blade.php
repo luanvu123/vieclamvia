@@ -586,7 +586,7 @@
 
                         <li class="header-nav">TIỆN ÍCH</li>
                         <li class="nav-item">
-                            <a href="https://vlclone.com/payments" class="auth-required">
+                            <a href="{{route('checkout')}}" class="auth-required">
                                 <span class="icon-holder">
                                     <i class="anticon anticon-bank" style="color:#008800"></i>
                                 </span>
@@ -594,7 +594,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="https://vlclone.com/level" class="auth-required">
+                            <a href="{{route('type')}}" class="auth-required">
                                 <span class="icon-holder">
                                     <i class="anticon anticon-percentage" style="color:#FF6600"></i>
                                 </span>

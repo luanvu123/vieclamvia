@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\TypeCustomer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -10,7 +11,7 @@ class CustomerController extends Controller
 {
       public function profile()
     {
-        $customer = Auth::guard('customer')->user()->load('typeCustomer');;
+        $customer = Auth::guard('customer')->user()->load('typeCustomer');
 
         $loginHistories = $customer->loginHistories()->orderBy('login_time', 'desc')->take(5)->get();
 
@@ -18,6 +19,20 @@ class CustomerController extends Controller
             'customer',
             'loginHistories',
         ));
+    }
+    public function type()
+{
+    $typeCustomers = TypeCustomer::where('status', 'active')->get();
+
+    return view('pages.type', compact('typeCustomers'));
+}
+
+     public function bank()
+    {
+        $customer = Auth::guard('customer')->user()->load('typeCustomer');
+        $banks = \App\Models\Bank::where('status', 'active')->get();
+
+        return view('pages.checkout', compact('customer','banks'));
     }
      public function updateName(Request $request)
     {

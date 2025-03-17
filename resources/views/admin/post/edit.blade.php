@@ -42,7 +42,7 @@
 
             <div class="form-group">
                 <label>Mô Tả</label>
-                <textarea name="description" class="form-control" rows="5">{{ old('description', $post->description) }}</textarea>
+                <textarea name="description" id="summary2" class="form-control" rows="5">{{ old('description', $post->description) }}</textarea>
             </div>
 
             <div class="form-group">

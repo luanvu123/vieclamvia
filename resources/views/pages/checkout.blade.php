@@ -11,210 +11,71 @@
                 <div class="col-md-7">
                     <div class="tab-money">
                         <ul class="nav nav-pills pd-20 nav-banks" role="tablist">
-                            <li class="nav-item">
-                                <a class="nav-link  active " data-toggle="pill" href="#payment_0" role="tab"
-                                    aria-controls="pills-home" aria-selected="true">
-                                    <img height="25px" src="https://vlclone.com/images/banks/icon/ACB.png" alt="">
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link " data-toggle="pill" href="#payment_1" role="tab"
-                                    aria-controls="pills-home" aria-selected="true">
-                                    <img height="25px" src="https://vlclone.com/images/banks/icon/USDT.png" alt="">
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link " data-toggle="pill" href="#payment_2" role="tab"
-                                    aria-controls="pills-home" aria-selected="true">
-                                    <img height="25px" src="https://vlclone.com/images/banks/icon/BINANCE.png" alt="">
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link " data-toggle="pill" href="#payment_3" role="tab"
-                                    aria-controls="pills-home" aria-selected="true">
-                                    <img height="25px" src="https://vlclone.com/images/banks/icon/PAYPAL.png" alt="">
-                                </a>
-                            </li>
+                            @foreach ($banks as $key => $bank)
+                                <li class="nav-item">
+                                    <a class="nav-link {{ $key === 0 ? 'active' : '' }}" data-toggle="pill"
+                                        href="#payment_{{ $key }}" role="tab">
+                                        <img height="25px" src="{{ asset('storage/' . $bank->logo) }}" alt="{{ $bank->name }}">
+                                    </a>
+                                </li>
+                            @endforeach
                         </ul>
+
                         <div class="tab-content">
-
-                            <div class="tab-pane fade  show active " id="payment_0" role="tabpanel" data-syntax="vlclone">
-                                <div class="col-12">
-                                    <div class="row">
-                                        <div class="col-sm-12
-                                                                                            col-md-6 col-lg-7
-                                                                                            text-center">
-                                            <div class="card">
-                                                <div class="card-header text-center pb-2">
-                                                    <h6>THÔNG TIN THANH TOÁN</h6>
-                                                </div>
-                                                <div class="card-body">
-                                                    <h4 class="text-primary">
-                                                        <img height="50px" src="https://vlclone.com/images/banks/icon/ACB.png" alt="">
-                                                    </h4>
-                                                    <h5 class="py-2">6679798686</h5>
-                                                    <h5>Nguyễn Ngọc Hoàng Long</h5>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="col-sm-12 col-md-6 col-lg-5 text-center">
-
-                                            <div class="card">
-                                                <div class="card-body">
-                                                    <img src="https://img.vietqr.io/image/ACB-6679798686-qr_only.png?accountName=Nguy%C3%AA%CC%83n+Ngo%CC%A3c+Hoa%CC%80ng+Long&amp;addInfo=vlclone+zrtbyybbj24100816"
-                                                        alt="qr code" class="qr-code">
+                            @foreach ($banks as $key => $bank)
+                                <div class="tab-pane fade {{ $key === 0 ? 'show active' : '' }}" id="payment_{{ $key }}"
+                                    role="tabpanel">
+                                    <div class="col-12">
+                                        <div class="row">
+                                            <!-- Thông tin thanh toán -->
+                                            <div class="col-sm-12 col-md-6 col-lg-7 text-center">
+                                                <div class="card">
+                                                    <div class="card-header text-center pb-2">
+                                                        <h6>THÔNG TIN THANH TOÁN</h6>
+                                                    </div>
+                                                    <div class="card-body">
+                                                        <h4 class="text-primary">
+                                                            <img height="50px" src="{{ asset('storage/' . $bank->logo) }}"
+                                                                alt="{{ $bank->name }}">
+                                                        </h4>
+                                                        <h5 class="py-2">{{ $bank->account_number }}</h5>
+                                                        <h5>{{ $bank->name }}</h5>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
 
-                                        <div class="col-12 text-center">
-                                            <div class="card">
-                                                <div class="card-body text-center">
-                                                    <h5>NỘI DUNG CHUYỂN KHOẢN</h5>
-                                                    <div class="alert alert-info alert-dismissible fade show">
-                                                        <strong style="font-size: 20px"><span class="bank-syntax"></span>
-                                                            zrtbyybbj24100816</strong>
+                                            <!-- Mã QR -->
+                                            <div class="col-sm-12 col-md-6 col-lg-5 text-center">
+                                                <div class="card">
+                                                    <div class="card-body">
+                                                        @if ($bank->qr_code)
+                                                            <img src="{{ asset('storage/' . $bank->qr_code) }}" alt="QR Code"
+                                                                class="qr-code" style="max-width: 150px;">
+                                                        @endif
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <!-- Nội dung chuyển khoản -->
+                                            <div class="col-12 text-center">
+                                                <div class="card">
+                                                    <div class="card-body text-center">
+                                                        <h5>NỘI DUNG CHUYỂN KHOẢN</h5>
+                                                        <div class="alert alert-info alert-dismissible fade show">
+                                                            <strong style="font-size: 20px">{{ $bank->content }}
+                                                                {{ $customer->name }}{{$customer->idCustomer}}</strong>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="tab-pane fade " id="payment_1" role="tabpanel" data-syntax="1">
-                                <div class="col-12">
-                                    <div class="row">
-                                        <div class="col-sm-12
-                                                                                            col-md-6 col-lg-7
-                                                                                            text-center">
-                                            <div class="card">
-                                                <div class="card-header text-center pb-2">
-                                                    <h6>THÔNG TIN THANH TOÁN</h6>
-                                                </div>
-                                                <div class="card-body">
-                                                    <h4 class="text-primary">
-                                                        <img height="50px" src="https://vlclone.com/images/banks/icon/USDT.png" alt="">
-                                                    </h4>
-                                                    <label style="font-weight: bold">Select Chains</label>
-
-                                                    <select class="form-control" id="usdt_chain">
-                                                        <option value="BEP20"
-                                                            data-address="0x0b43aa5ae2c47a2449bb96684e3c40d0028ae74d">BEP20
-                                                        </option>
-                                                        <option value="ERC20"
-                                                            data-address="0x0b43aa5ae2c47a2449bb96684e3c40d0028ae74d">ERC20
-                                                        </option>
-                                                        <option value="TRC20"
-                                                            data-address="TV5jV6B8TTL3K3cg5mHyUvyp9ofLM9A26G">TRC20</option>
-                                                    </select>
-
-                                                    <div class="custom-bank-line-sm" style="margin-top: 10px">Address:
-                                                        <span class="copy-on-click" id="usdt_address"></span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="col-sm-12 col-md-6 col-lg-5 text-center">
-
-                                            <div class="card">
-                                                <div class="card-body">
-                                                    <img id="usdt_image" src="https://vlclone.com/images/banks/others/usd_bep20.jpeg" alt=""
-                                                        class="qr-code" />
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="tab-pane fade " id="payment_2" role="tabpanel" data-syntax="vlclone">
-                                <div class="col-12">
-                                    <div class="row">
-                                        <div class="col-sm-12
-                                                                                            col-md-6 col-lg-7
-                                                                                            text-center">
-                                            <div class="card">
-                                                <div class="card-header text-center pb-2">
-                                                    <h6>THÔNG TIN THANH TOÁN</h6>
-                                                </div>
-                                                <div class="card-body">
-                                                    <h4 class="text-primary">
-                                                        <img height="50px" src="https://vlclone.com/images/banks/icon/BINANCE.png" alt="">
-                                                    </h4>
-                                                    <h5 class="py-2">Binance ID: 251711073</h5>
-                                                    <h5>Email: <a href="/cdn-cgi/l/email-protection" class="__cf_email__"
-                                                            data-cfemail="2e6a4f404f4d4b405a4b5c4f4a5d6e49434f4742004d4143">[email&#160;protected]</a>
-                                                    </h5>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="col-sm-12 col-md-6 col-lg-5 text-center">
-
-                                            <div class="card">
-                                                <div class="card-body">
-                                                    <img src="https://vlclone.com/images/banks/others/binance.jpg" alt="qr code"
-                                                        class="qr-code">
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="col-12 text-center">
-                                            <div class="card">
-                                                <div class="card-body text-center">
-                                                    <h5>NỘI DUNG CHUYỂN KHOẢN</h5>
-                                                    <div class="alert alert-info alert-dismissible fade show">
-                                                        <strong style="font-size: 20px"><span class="bank-syntax"></span>
-                                                            zrtbyybbj24100816</strong>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="tab-pane fade " id="payment_3" role="tabpanel" data-syntax="vlclone">
-                                <div class="col-12">
-                                    <div class="row">
-                                        <div class="col-sm-12
-                                                                                            col-md-12 col-lg-12
-                                                                                            text-center">
-                                            <div class="card">
-                                                <div class="card-header text-center pb-2">
-                                                    <h6>THÔNG TIN THANH TOÁN</h6>
-                                                </div>
-                                                <div class="card-body">
-                                                    <h4 class="text-primary">
-                                                        <img height="50px" src="https://vlclone.com/images/banks/icon/PAYPAL.png" alt="">
-                                                    </h4>
-                                                    <h5 class="py-2">Email: <a href="/cdn-cgi/l/email-protection"
-                                                            class="__cf_email__"
-                                                            data-cfemail="6307020d0200060d17061102071023040e020a0f4d000c0e">[email&#160;protected]</a>
-                                                    </h5>
-                                                </div>
-                                            </div>
-                                        </div>
-
-
-                                        <div class="col-12 text-center">
-                                            <div class="card">
-                                                <div class="card-body text-center">
-                                                    <h5>NỘI DUNG CHUYỂN KHOẢN</h5>
-                                                    <div class="alert alert-info alert-dismissible fade show">
-                                                        <strong style="font-size: 20px"><span class="bank-syntax"></span>
-                                                            zrtbyybbj24100816</strong>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            @endforeach
                         </div>
                     </div>
                 </div>
+
 
                 <div class="col-md-5">
                     <div class="tab-money height-full">
@@ -223,10 +84,9 @@
                                 <span>Tổng Nạp Tháng</span>
                             </div>
                             <div class="text-center">
-                                <span class="wallet-my">0
+                                <span class="wallet-my">{{ number_format($customer->balance, 0, ',', '.') }} VND
                                 </span>
-                                <p class="m-b-5 m-t-10">Cấp Bậc: <span class="account-level bg-user-level bg-1"> KHÁCH
-                                        HÀNG</span>
+                                <p class="m-b-5 m-t-10">Cấp Bậc: <span class="account-level bg-user-level bg-1"> {{ $customer->typeCustomer->name ?? 'Chưa được phân loại' }}</span>
                                 </p>
                             </div>
                         </div>

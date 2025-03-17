@@ -161,8 +161,22 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
                                             width="20" height="20"> Loại khách hàng
                                     </a>
                                 </li>
+                                 <li class="{{ Request::is('banks*') ? 'active' : '' }}">
+                                            <a href="{{ route('banks.index') }}">
+                                                <img src="{{ asset('backend_admin/images/3018587_admin_administrator_ajax_options_permission_icon.svg') }}"
+                                                    alt="Google" width="20" height="20"> Thông tin thanh
+                                                toán
+                                            </a>
+                                        </li>
                                     </ul>
 
+                                </li>
+                                  <li class="treeview {{ Request::is('product*') ? 'active' : '' }}">
+                                    <a href="{{ route('product.index') }}">
+                                        <img src="{{ asset('backend_admin/images/candidate-for-elections-svgrepo-com.svg') }}"
+                                            alt="Google" width="20" height="20">
+                                        <span> Quản lý gian hàng</span>
+                                    </a>
                                 </li>
                                    <li class="treeview {{ Request::is('customer-manage*') ? 'active' : '' }}">
                                     <a href="{{ route('customer-manage.index') }}">
