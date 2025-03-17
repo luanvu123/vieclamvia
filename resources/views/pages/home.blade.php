@@ -48,57 +48,65 @@
         </div>
 
         <div class="card card-body">
-@foreach ($categories as $index => $category)
-    <div data-toggle="collapse" href="#collapse{{ $category->id }}" class="table-intro text-center font-size-16"
-         style="background: {{ $gradients[$index % count($gradients)] }};">
-        @if($category->icon)
-            <img src="{{ $category->icon }}" alt="">
-        @else
-            <img src="/images/tags/instagram.svg" alt="">
-        @endif
-        <span>{{ $category->name }}</span>
-    </div>
+            @foreach ($categories as $index => $category)
+                <div data-toggle="collapse" href="#collapse{{ $category->id }}" class="table-intro text-center font-size-16"
+                    style="background: {{ $gradients[$index % count($gradients)] }};">
+                    @if($category->icon)
+                        <img src="{{ $category->icon }}" alt="">
+                    @else
+                        <img src="/images/tags/instagram.svg" alt="">
+                    @endif
+                    <span>{{ $category->name }}</span>
+                </div>
 
-    <div id="collapse{{ $category->id }}" class="collapse show">
-        @foreach($category->subcategories as $subcategory)
-            <div class="table-responsive mt-3">
+                <div id="collapse{{ $category->id }}" class="collapse show">
+                    @foreach($category->subcategories as $subcategory)
+                        <div class="table-responsive mt-3">
 
-                <table class="table table-bordered table-accounts mb-3">
-                    <thead>
-                        <tr>
-                            <th>{{ $subcategory->name }}</th>
-                            <th>Tên Sản Phẩm</th>
-                            <th>Mô Tả</th>
-                            <th>Còn</th>
-                            <th>Giá</th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach($subcategory->products as $product)
-                            <tr class="{{ $product->quantity > 0 ? 'c_pointer' : '' }}">
-                                <td>
-                                    <img src="{{ asset('storage/' . $product->image) }}" alt="" height="15">
-                                </td>
-                                <td>{{ $product->name }}</td>
-                                <td>{{ $product->short_description ?? 'Không có mô tả' }}</td>
-                                <td class="{{ $product->quantity <= 0 ? 'text-danger' : '' }}">
-                                    {{ $product->quantity }}
-                                </td>
-                                <td>{{ number_format($product->price, 0) }}₫</td>
-                                <td>
-                                    @if($product->quantity > 0)
-                                        <span class="category-action anticon anticon-shopping-cart"></span>
-                                    @endif
-                                </td>
-                            </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-            </div>
-        @endforeach
-    </div>
-@endforeach
+                            <table class="table table-bordered table-accounts mb-3">
+                                <thead>
+                                    <tr>
+                                        <th>{{ $subcategory->name }}</th>
+                                        <th>Tên Sản Phẩm</th>
+                                        <th>Mô Tả</th>
+                                        <th>Còn</th>
+                                        <th>Giá</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach($subcategory->products as $product)
+                                        <tr class="{{ $product->quantity > 0 ? 'c_pointer' : '' }}">
+                                            <td>
+                                                <img src="{{ asset('storage/' . $product->image) }}" alt="" height="15">
+                                            </td>
+                                            <td>{{ $product->name }}</td>
+                                            <td>{{ $product->short_description ?? 'Không có mô tả' }}</td>
+                                            <td class="{{ $product->quantity <= 0 ? 'text-danger' : '' }}">
+                                                {{ $product->quantity }}
+                                            </td>
+                                            <td>{{ number_format($product->price, 0) }}₫</td>
+                                            <!-- Trong vòng lặp hiển thị sản phẩm -->
+                                            <td>
+                                                @if($product->quantity > 0)
+                                                    <span class="category-action anticon anticon-shopping-cart" data-toggle="modal"
+                                                        data-target="#modalPurchase" data-product-id="{{ $product->id }}"
+                                                        data-product-name="{{ $product->name }}"
+                                                        data-product-description="{!! $product->description !!}"
+                                                        data-product-quantity="{{ $product->quantity }}"
+                                                        data-product-price="{{ $product->price }}"></span>
+                                                @endif
+                                            </td>
+
+
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                    @endforeach
+                </div>
+            @endforeach
 
 
 
@@ -392,14 +400,11 @@
                 </div>
             </div>
         </div>
-
         <div id="modalPurchase" class="modal fade" role="dialog">
             <div class="modal-dialog modal-lg">
-
-                <!-- Modal content-->
-                <div class="modal-content" v-if="category">
+                <div class="modal-content">
                     <div class="modal-header">
-                        <h4 class="modal-title" v-text="category.name"></h4>
+                        <h4 class="modal-title" id="productName"></h4>
                         <button class="close" data-dismiss="modal" type="button">
                             <i class="anticon anticon-close"></i>
                         </button>
@@ -407,97 +412,100 @@
                     <div class="modal-body">
                         <div class="form-group">
                             <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="font-600"></div>
+                                    <div id="productDescription"></div>
+                                </div>
                                 <div class="col-sm-6">
-                                    <div class="font-600" style="color: rgb(63, 135, 245);">Mô tả:</div>
-                                    <div class="font-600 category-content mb-2"
-                                        v-text="formatTextContent(category.description)"></div>
-                                </div>
-
-                                <div class="col-sm-6">
-                                    <div class="font-600" style="color: rgb(136, 108, 255);">Lưu ý:</div>
-                                    <div class="font-600 category-content" v-text="category.warranty"></div>
+                                    <div class="font-600">Còn:</div>
+                                    <div id="productQuantity"></div>
                                 </div>
                             </div>
 
-                            <p class="font-600 m-b-5">Xuất: <span v-text="getExportFormats()"></span></p>
-
-                            <div>
-                                <label style="color: tomato;">THÔNG TIN ĐƠN HÀNG</label>
+                            <div class="form-group mt-3">
+                                <label for="quantityInput">Số lượng mua:</label>
+                                <input type="number" id="quantityInput" class="form-control" min="1" value="1">
                             </div>
 
-                            <span class="row-acc">
-                                <span class="m-r-20 text-left font-600">Số lượng Mua: </span>
-                            </span>
-                            <div class="row">
-                                <div class="col-7">
-                                    <input class="form-control" placeholder="Số Lượng Mua" type="number" v-model="quantity"
-                                        v-bind:min="category.min_purchase || 0" v-bind:max="category.quantity">
-                                </div>
-
-                                <div class="col-5 text-center">
-                                    <span class="via_quantity mgr-10 m-t-10"
-                                        v-bind:class="{[category.quantity > 4 ? 'number_good' : 'number_out_of_stock']: true}">
-                                        <span class="font-600">Còn</span>
-                                        <span class="bold m-l-5" v-text="category.quantity"></span>
-                                    </span>
-                                </div>
+                            <div class="mt-3">
+                                <div class="font-600">Giá:</div>
+                                <div id="productPrice"></div>
                             </div>
-                            <div class="m-t-10" style="font-size: 18px;">
-                                <span class="font-600">Tiền: </span>
-                                <span v-text="formatMoney(quantity)"></span>
-                                <span>x</span>
-                                <span v-text="formatMoney(category.discount_price)"></span>
-                                =
-                                <span v-text="formatMoney(category.discount_price* quantity)"> đ</span>
+                            <div class="mt-3">
+                                <div class="font-600">Tổng tiền:</div>
+                                <div id="totalPrice"></div>
                             </div>
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button class="btn btn-tone btn-primary" @click="onPurchase()"><i
-                                class="anticon anticon-shopping-cart"></i> MUA NGAY
-                        </button>
-                        <button class="btn btn-default" data-dismiss="modal"><i class="anticon anticon-close"></i> ĐÓNG
-                        </button>
+                        <button class="btn btn-primary"><i class="anticon anticon-shopping-cart"></i> MUA NGAY</button>
+                        <button class="btn btn-default" data-dismiss="modal"><i class="anticon anticon-close"></i>
+                            ĐÓNG</button>
                     </div>
                 </div>
-
             </div>
         </div>
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                let currentProductPrice = 0;
 
-        <div id="modalInfo" class="modal fade" role="dialog">
-            <div class="modal-dialog modal-lg">
+                // Hàm cập nhật tổng tiền
+                function updateTotalPrice() {
+                    const quantity = parseInt(document.getElementById('quantityInput').value) || 1;
+                    const totalPrice = currentProductPrice * quantity;
 
-                <!-- Modal content-->
-                <div class="modal-content" v-if="category">
-                    <div class="modal-header">
-                        <h4 class="modal-title" v-text="category.name"></h4>
-                        <button class="close" data-dismiss="modal" type="button">
-                            <i class="anticon anticon-close"></i>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="form-group">
-                            <div class="row">
-                                <div class="col-sm-6">
-                                    <div class="font-600" style="color: rgb(63, 135, 245);">Mô tả:</div>
-                                    <div class="font-600 category-content mb-2"
-                                        v-text="formatTextContent(category.description)"></div>
-                                </div>
+                    document.getElementById('totalPrice').innerText = new Intl.NumberFormat().format(totalPrice) + '₫';
+                }
+                // Khi nhấn vào giỏ hàng
+                document.querySelectorAll('.category-action').forEach(item => {
+                    item.addEventListener('click', function () {
+                        const productId = this.getAttribute('data-product-id');
+                        const productName = this.getAttribute('data-product-name');
+                        const productDescription = this.getAttribute('data-product-description');
+                        const productQuantity = this.getAttribute('data-product-quantity');
+                        const productPrice = this.getAttribute('data-product-price');
+                        currentProductPrice = productPrice;
+                        // Cập nhật dữ liệu trong modal
+                        document.getElementById('productName').innerText = productName;
+                        document.getElementById('productDescription').innerHTML = productDescription;
+                        document.getElementById('productQuantity').innerText = productQuantity;
+                        document.getElementById('productPrice').innerText = new Intl.NumberFormat().format(productPrice) + '₫';
 
-                                <div class="col-sm-6">
-                                    <div class="font-600" style="color: rgb(136, 108, 255);">Lưu ý:</div>
-                                    <div class="font-600 category-content" v-text="category.warranty"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button class="btn btn-danger" data-dismiss="modal"><i class="anticon anticon-close"></i> ĐÓNG
-                        </button>
-                    </div>
-                </div>
 
-            </div>
-        </div>
+                        // Cập nhật giá trị tối đa cho input số lượng
+                        document.getElementById('quantityInput').setAttribute('max', productQuantity);
+                        updateTotalPrice();
+                    });
+                });
+                document.getElementById('quantityInput').addEventListener('input', updateTotalPrice);
+                document.querySelector('.btn-primary').addEventListener('click', function () {
+                    const quantity = document.getElementById('quantityInput').value;
+                    const productId = document.querySelector('.category-action').getAttribute('data-product-id');
+
+                    fetch('/order/store', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                        },
+                        body: JSON.stringify({
+                            product_id: productId,
+                            quantity: quantity
+                        })
+                    })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.success) {
+                                alert(data.success);
+                                location.reload();
+                            } else if (data.error) {
+                                alert(data.error);
+                            }
+                        })
+                        .catch(error => console.error('Lỗi:', error));
+                });
+
+            });
+        </script>
     </div>
 @endsection

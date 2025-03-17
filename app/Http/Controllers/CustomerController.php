@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Hash;
 use PragmaRX\Google2FA\Google2FA;
 class CustomerController extends Controller
 {
-      public function profile()
+    public function profile()
     {
         $customer = Auth::guard('customer')->user()->load('typeCustomer');
 
@@ -21,20 +21,20 @@ class CustomerController extends Controller
         ));
     }
     public function type()
-{
-    $typeCustomers = TypeCustomer::where('status', 'active')->get();
+    {
+        $typeCustomers = TypeCustomer::where('status', 'active')->get();
 
-    return view('pages.type', compact('typeCustomers'));
-}
+        return view('pages.type', compact('typeCustomers'));
+    }
 
-     public function bank()
+    public function bank()
     {
         $customer = Auth::guard('customer')->user()->load('typeCustomer');
         $banks = \App\Models\Bank::where('status', 'active')->get();
 
-        return view('pages.checkout', compact('customer','banks'));
+        return view('pages.checkout', compact('customer', 'banks'));
     }
-     public function updateName(Request $request)
+    public function updateName(Request $request)
     {
         $request->validate([
             'name' => 'required|string|max:255',
@@ -46,7 +46,7 @@ class CustomerController extends Controller
 
         return redirect()->route('profile.site')->with('success', 'Cập nhật tên thành công!');
     }
-     public function updatePassword(Request $request)
+    public function updatePassword(Request $request)
     {
         $request->validate([
             'old_password' => 'required|string',
@@ -65,7 +65,7 @@ class CustomerController extends Controller
         return redirect()->route('profile.site')->with('success', 'Đổi mật khẩu thành công!');
     }
 
-   // Phương thức tạo secret key cho 2FA
+    // Phương thức tạo secret key cho 2FA
     public function generate2faSecret(Request $request)
     {
         $customer = Auth::guard('customer')->user();
@@ -198,5 +198,71 @@ class CustomerController extends Controller
         }
 
         return back()->withErrors(['verification_code' => 'Mã xác thực không đúng']);
+    }
+
+    // PostController.php
+    public function indexPost()
+    {
+        // Lấy các genre_post đã được phân loại theo type
+        $basicGuides = \App\Models\GenrePost::where('type', 'DANH SÁCH HƯỚNG DẪN CƠ BẢN')
+            ->where('status', 'active')
+            ->with([
+                'posts' => function ($query) {
+                    $query->where('status', 'active');
+                }
+            ])
+            ->get();
+
+        $otherTutorials = \App\Models\GenrePost::where('type', 'DANH SÁCH THỦ THUẬT KHÁC')
+            ->where('status', 'active')
+            ->with([
+                'posts' => function ($query) {
+                    $query->where('status', 'active');
+                }
+            ])
+            ->get();
+
+        return view('pages.post_index', compact('basicGuides', 'otherTutorials'));
+    }
+    // PostController.php
+    public function postDetail($genreSlug, $postSlug)
+    {
+        // Tìm post dựa trên slug và liên kết với genre
+        $post = \App\Models\Post::where('slug', $postSlug)
+            ->whereHas('genrePost', function ($query) use ($genreSlug) {
+                $query->where('slug', $genreSlug);
+            })
+            ->where('status', 'active')
+            ->first();
+
+        if (!$post) {
+            abort(404);
+        }
+
+        // Tăng số lượt xem
+        $post->increment('view');
+
+        // Lấy các bài viết liên quan cùng genre
+        $relatedPosts = \App\Models\Post::where('genre_post_id', $post->genre_post_id)
+            ->where('id', '!=', $post->id)
+            ->where('status', 'active')
+            ->limit(5)
+            ->get();
+
+        return view('pages.post_detail', compact('post', 'relatedPosts'));
+    }
+    // PostController.php
+    public function genreShow($genreSlug)
+    {
+        $genre = \App\Models\GenrePost::where('slug', $genreSlug)
+            ->where('status', 'active')
+            ->firstOrFail();
+
+        $posts = \App\Models\Post::where('genre_post_id', $genre->id)
+            ->where('status', 'active')
+            ->orderBy('created_at', 'desc')
+            ->paginate(10);
+
+        return view('pages.genre_posts', compact('genre', 'posts'));
     }
 }

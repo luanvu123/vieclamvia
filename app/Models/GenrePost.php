@@ -9,7 +9,7 @@ class GenrePost extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'status','type'];
+    protected $fillable = ['name','slug', 'status','type'];
 
     public function posts()
     {

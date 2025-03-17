@@ -7,7 +7,7 @@
         <h1>Danh Sách Sản Phẩm</h1>
         <a href="{{ route('product.create') }}" class="btn btn-primary mb-3">Thêm Sản Phẩm</a>
 
-        <table class="table table-bordered" id="product-table">
+        <table class="table table-bordered" id="user-table">
             <thead>
                 <tr>
                     <th>ID</th>
@@ -25,20 +25,20 @@
                         <td>{{ $product->id }}</td>
                         <td>{{ $product->name }}</td>
                         <td><img src="{{ asset('storage/' . $product->image) }}" width="50"></td>
-                       <td>
-    <a href="{{ route('product.stocks', $product->id) }}" class="badge badge-info">
-        {{ $product->stocks_count }}
-    </a>
-    @if($product->quantity != $product->stocks_count)
-        <span class="badge badge-warning" title="Số lượng hiển thị khác với số thực tế trong kho">
-            {{ $product->quantity }}
-        </span>
-        <a href="{{ route('product.sync-quantity', $product->id) }}" class="btn btn-xs btn-default"
-           title="Đồng bộ số lượng">
-            <i class="fas fa-sync"></i>
-        </a>
-    @endif
-</td>
+                        <td>
+                            <a href="{{ route('product.stocks', $product->id) }}" class="badge badge-info">
+                                {{ $product->stocks_count }}
+                            </a>
+                            @if($product->quantity != $product->stocks_count)
+                                <span class="badge badge-warning" title="Số lượng hiển thị khác với số thực tế trong kho">
+                                    {{ $product->quantity }}
+                                </span>
+                                <a href="{{ route('product.sync-quantity', $product->id) }}" class="btn btn-xs btn-default"
+                                    title="Đồng bộ số lượng">
+                                    <i class="fas fa-sync"></i>
+                                </a>
+                            @endif
+                        </td>
 
                         <td>{{ number_format($product->price) }} VNĐ</td>
                         <td>{{ $product->status }}</td>
@@ -109,14 +109,6 @@
 
     <script>
         $(document).ready(function () {
-            $('#product-table').DataTable({
-                "responsive": true,
-                "lengthChange": true,
-                "autoWidth": false,
-                "language": {
-                    "url": "//cdn.datatables.net/plug-ins/1.10.25/i18n/Vietnamese.json"
-                }
-            });
             $('#addStockModal').on('show.bs.modal', function (event) {
                 var button = $(event.relatedTarget);
                 var productId = button.data('id');

@@ -82,88 +82,73 @@
                         </li>
                     </ul>
                     <ul class="nav-right">
-                        <div id="google_translate_element"></div>
+                        <div id="google_translate_element" style="display: none;"></div>
                         <div class="dropdown dropdown-animated dropdown-language">
                             <button class="btn dropdown-toggle" type="button" data-toggle="dropdown"
                                 aria-expanded="false">
-                                <img src="{{asset('imgs/vietnamese.svg')}}" style="border-radius: 5px" alt="" />
+                                <img src="{{ asset('imgs/vietnamese.svg') }}" style="border-radius: 5px" alt="" />
                                 <span>Việt Nam</span>
                             </button>
                             <div class="dropdown-menu" style="cursor: pointer">
                                 <span class="dropdown-item" onClick="resetTranslate()">
-                                    <img src="/images/countries/vietnamese.svg" style="border-radius: 5px" alt="" />
+                                    <img src="{{ asset('imgs/vietnamese.svg') }}" style="border-radius: 5px" alt="" />
                                     Việt Nam
                                 </span>
                                 <span class="dropdown-item" onClick="changeLanguage('en')">
-                                    <img src="/images/countries/unitedstates.svg" style="border-radius: 5px" alt="" />
+                                    <img src="{{ asset('imgs/unitedstates.svg') }}" style="border-radius: 5px" alt="" />
                                     Mỹ - English
                                 </span>
                                 <span class="dropdown-item" onClick="changeLanguage('tl')">
-                                    <img src="/images/countries/philippines.svg" style="border-radius: 5px" alt="" />
+                                    <img src="{{ asset('imgs/philippines.svg') }}" style="border-radius: 5px" alt="" />
                                     Philippines - Filipino
                                 </span>
                                 <span class="dropdown-item" onClick="changeLanguage('id')">
-                                    <img src="/images/countries/indonesia.svg" style="border-radius: 5px" alt="" />
+                                    <img src="{{ asset('imgs/indonesia.svg') }}" style="border-radius: 5px" alt="" />
                                     Indonesia
                                 </span>
                                 <span class="dropdown-item" onClick="changeLanguage('zh-CN')">
-                                    <img src="/images/countries/china.svg" style="border-radius: 5px" alt="" />
+                                    <img src="{{ asset('imgs/china.svg') }}" style="border-radius: 5px" alt="" />
                                     Trung Quốc - Giản Thể
                                 </span>
                                 <span class="dropdown-item" onClick="changeLanguage('zh-TW')">
-                                    <img src="/images/countries/china.svg" style="border-radius: 5px" alt="" />
+                                    <img src="{{ asset('imgs/china.svg') }}" style="border-radius: 5px" alt="" />
                                     Trung Quốc - Phồn Thể
                                 </span>
-                                <span class="dropdown-item" onClick="changeLanguage('th')">
-                                    <img src="/images/countries/thailan.svg" style="border-radius: 5px" alt="" />
-                                    Thái Lan - ThaiLand
-                                </span>
-                                <span class="dropdown-item" onClick="changeLanguage('es')">
-                                    <img src="/images/countries/spain.svg" style="border-radius: 5px" alt="" />
-                                    Tây Ban Nha - Spain
-                                </span>
                                 <span class="dropdown-item" onClick="changeLanguage('ja')">
-                                    <img src="/images/countries/japan.svg" style="border-radius: 5px" alt="" />
+                                    <img src="{{ asset('imgs/japan.svg') }}" style="border-radius: 5px" alt="" />
                                     Nhật Bản - Japan
                                 </span>
                                 <span class="dropdown-item" onClick="changeLanguage('ko')">
-                                    <img src="/images/countries/korea.svg" style="border-radius: 5px" alt="" />
+                                    <img src="{{ asset('imgs/korea.svg') }}" style="border-radius: 5px" alt="" />
                                     Hàn Quốc - Korea
                                 </span>
-                                <span class="dropdown-item" onClick="changeLanguage('my')">
-                                    <img src="/images/countries/myanmar.svg" style="border-radius: 5px" alt="" />
-                                    Myanmar
+                                <span class="dropdown-item" onClick="changeLanguage('th')">
+                                    <img src="{{ asset('imgs/thailan.svg') }}" style="border-radius: 5px" alt="" />
+                                    Thái Lan - ThaiLand
                                 </span>
-                                <span class="dropdown-item" onClick="changeLanguage('ur')">
-                                    <img src="/images/countries/pakistan.svg" style="border-radius: 5px" alt="" />
-                                    Pakistan - Urdu
-                                </span>
-                                <span class="dropdown-item" onClick="changeLanguage('ms')">
-                                    <img src="/images/countries/singapore.svg" style="border-radius: 5px" alt="" />
-                                    Singapore - Mã Lai
-                                </span>
-                                <span class="dropdown-item" onClick="changeLanguage('ta')">
-                                    <img src="/images/countries/singapore.svg" style="border-radius: 5px" alt="" />
-                                    Singapore - Tamil
-                                </span>
-                                <span class="dropdown-item" onClick="changeLanguage('pt')">
-                                    <img src="/images/countries/brazil.svg" style="border-radius: 5px" alt="" />
-                                    Brazil - Bồ Đào Nha
+                                <span class="dropdown-item" onClick="changeLanguage('es')">
+                                    <img src="{{ asset('imgs/spain.svg') }}" style="border-radius: 5px" alt="" />
+                                    Tây Ban Nha - Spain
                                 </span>
                                 <span class="dropdown-item" onClick="changeLanguage('hi')">
-                                    <img src="/images/countries/an-do-india.svg" style="border-radius: 5px" alt="" />
+                                    <img src="{{ asset('imgs/an-do-india.svg') }}" style="border-radius: 5px" alt="" />
                                     Ấn Độ - Hindi
                                 </span>
+                                <span class="dropdown-item" onClick="changeLanguage('pt')">
+                                    <img src="{{ asset('imgs/brazil.svg') }}" style="border-radius: 5px" alt="" />
+                                    Brazil - Bồ Đào Nha
+                                </span>
                                 <span class="dropdown-item" onClick="changeLanguage('ms')">
-                                    <img src="/images/countries/malaysia.svg" style="border-radius: 5px" alt="" />
+                                    <img src="{{ asset('imgs/malaysia.svg') }}" style="border-radius: 5px" alt="" />
                                     Malaysia - Mã Lai
                                 </span>
                                 <span class="dropdown-item" onClick="changeLanguage('it')">
-                                    <img src="/images/countries/italy.svg" style="border-radius: 5px" alt="" />
+                                    <img src="{{ asset('imgs/italy.svg') }}" style="border-radius: 5px" alt="" />
                                     Italy - Ý
                                 </span>
                             </div>
                         </div>
+
 
                         @if (Auth::guard('customer')->check())
                             <!-- Menu thả xuống khi đã đăng nhập -->
@@ -183,7 +168,8 @@
                                             </div>
                                             <div class="m-l-10">
                                                 <p class="m-b-0 text-dark font-weight-semibold">
-                                                    {{ Auth::guard('customer')->user()->name ?? 'Tên người dùng' }}</p>
+                                                    {{ Auth::guard('customer')->user()->name ?? 'Tên người dùng' }}
+                                                </p>
                                                 <p class="m-b-0 opacity-07">KHÁCH HÀNG</p>
                                             </div>
                                         </div>
@@ -206,7 +192,7 @@
                                             <i class="anticon font-size-10 anticon-right"></i>
                                         </div>
                                     </a>
-                                    <a href="https://vlclone.com/profile" class="dropdown-item d-block p-h-15 p-v-10">
+                                    <a href="{{ route('profile.site') }}" class="dropdown-item d-block p-h-15 p-v-10">
                                         <div class="d-flex align-items-center justify-content-between">
                                             <div>
                                                 <i class="anticon opacity-04 font-size-16 anticon-project"></i>
@@ -404,175 +390,38 @@
                                 </span>
                             </a>
                             <ul class="dropdown-menu">
-                                <li class="dropdown">
-                                    <a class="dropdown-toggle" href="javascript:void(0);"
-                                        data-link="https://vlclone.com/shop/4">
-                                        <img class="img menu goto-view" alt="" src="/images/tags/fb-bm.png" />
-                                        <span class="goto-view">Danh sách BM</span>
-                                        <span class="arrow">
-                                            <i class="arrow-icon"></i>
-                                        </span>
-                                    </a>
-                                    <ul class="dropdown-menu">
-                                        <li>
-                                            <a href="https://vlclone.com/shop/4/1">
-                                                <img class="img menu" alt="" src="/images/stores/BM_Old.jpg" />
-                                                <span>BM50$</span>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="https://vlclone.com/shop/4/2">
-                                                <img class="img menu" alt="" src="/images/stores/BM_Old.jpg" />
-                                                <span>BM350$</span>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="https://vlclone.com/shop/4/3">
-                                                <img class="img menu" alt="" src="/images/stores/BM_Old.jpg" />
-                                                <span>BM Limit 250$</span>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </li>
-                                <li class="dropdown">
-                                    <a class="dropdown-toggle" href="javascript:void(0);"
-                                        data-link="https://vlclone.com/shop/3">
-                                        <img class="img menu goto-view" alt="" src="/images/tags/facebook.svg" />
-                                        <span class="goto-view">Danh sách Via</span>
-                                        <span class="arrow">
-                                            <i class="arrow-icon"></i>
-                                        </span>
-                                    </a>
-                                    <ul class="dropdown-menu">
-                                        <li>
-                                            <a href="https://vlclone.com/shop/3/4">
-                                                <img class="img menu" alt="" src="/images/stores/xmdttichxanh.svg" />
-                                                <span>Via Kháng 902 | Chat Support</span>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="https://vlclone.com/shop/3/7">
-                                                <img class="img menu" alt="" src="/images/tags/nolimit.svg" />
-                                                <span>TKQC Limit 50$</span>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="https://vlclone.com/shop/3/12">
-                                                <img class="img menu" alt="" src="/images/tags/nolimit.svg" />
-                                                <span>TKQC Limit 250$</span>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="https://vlclone.com/shop/3/5">
-                                                <img class="img menu" alt="" src="/images/stores/global1.svg" />
-                                                <span>Via Ngoại Live Ads</span>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="https://vlclone.com/shop/3/11">
-                                                <img class="img menu" alt="" src="/images/stores/global1.svg" />
-                                                <span>Via Ngoại Die Ads</span>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="https://vlclone.com/shop/3/6">
-                                                <img class="img menu" alt="" src="/images/stores/vietnamese.svg" />
-                                                <span>Via Việt Live Ads</span>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="https://vlclone.com/shop/3/13">
-                                                <img class="img menu" alt="" src="/images/stores/vietnamese.svg" />
-                                                <span>Via Việt Die Ads</span>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </li>
-                                <li class="dropdown">
-                                    <a class="dropdown-toggle" href="javascript:void(0);"
-                                        data-link="https://vlclone.com/shop/2">
-                                        <img class="img menu goto-view" alt="" src="/images/tags/facebook.svg" />
-                                        <span class="goto-view">Danh sách Clone</span>
-                                        <span class="arrow">
-                                            <i class="arrow-icon"></i>
-                                        </span>
-                                    </a>
-                                    <ul class="dropdown-menu">
-                                        <li>
-                                            <a href="https://vlclone.com/shop/2/8">
-                                                <img class="img menu" alt="" src="/images/stores/global1.svg" />
-                                                <span>Clone Global</span>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="https://vlclone.com/shop/2/9">
-                                                <img class="img menu" alt="" src="/images/stores/vietnamese.svg" />
-                                                <span>Clone Việt Nam</span>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </li>
-                                <li class="dropdown">
-                                    <a class="dropdown-toggle" href="javascript:void(0);"
-                                        data-link="https://vlclone.com/shop/6">
-                                        <img class="img menu goto-view" alt="" src="/images/tags/instagram.svg" />
-                                        <span class="goto-view">Danh sách Instagram</span>
-                                        <span class="arrow">
-                                            <i class="arrow-icon"></i>
-                                        </span>
-                                    </a>
-                                    <ul class="dropdown-menu">
-                                        <li>
-                                            <a href="https://vlclone.com/shop/6/16">
-                                                <img class="img menu" alt="" src="/images/tags/instagram2.svg" />
-                                                <span>Clone Instagram</span>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </li>
-                                <li class="dropdown">
-                                    <a class="dropdown-toggle" href="javascript:void(0);"
-                                        data-link="https://vlclone.com/shop/1">
-                                        <img class="img menu goto-view" alt="" src="/images/tags/outlook.svg" />
-                                        <span class="goto-view">Danh sách Hotmail</span>
-                                        <span class="arrow">
-                                            <i class="arrow-icon"></i>
-                                        </span>
-                                    </a>
-                                    <ul class="dropdown-menu">
-                                        <li>
-                                            <a href="https://vlclone.com/shop/1/10">
-                                                <img class="img menu" alt="" src="/images/tags/outlook.svg" />
-                                                <span>Hotmail Live V.V</span>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </li>
-                                <li class="dropdown">
-                                    <a class="dropdown-toggle" href="javascript:void(0);"
-                                        data-link="https://vlclone.com/shop/5">
-                                        <img class="img menu goto-view" alt="" src="/images/tags/gmail.svg" />
-                                        <span class="goto-view">Danh sách Gmail</span>
-                                        <span class="arrow">
-                                            <i class="arrow-icon"></i>
-                                        </span>
-                                    </a>
-                                    <ul class="dropdown-menu">
-                                        <li>
-                                            <a href="https://vlclone.com/shop/5/14">
-                                                <img class="img menu" alt="" src="/images/stores/vietnamese.svg" />
-                                                <span>Gmail Việt</span>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="https://vlclone.com/shop/5/15">
-                                                <img class="img menu" alt="" src="/images/stores/unitedstates.svg" />
-                                                <span>Gmail US</span>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </li>
+                                @foreach ($layout_categories as $category)
+                                                                <li class="dropdown">
+                                                                    <a class="dropdown-toggle" href="#">
+                                                                        <img class="img menu goto-view" alt=""
+                                                                            src="{{ asset('storage/' . $category->icon) }}" />
+                                                                        <span class="goto-view">{{ $category->name }}</span>
+                                                                        <span class="arrow"><i class="arrow-icon"></i></span>
+                                                                    </a>
+
+                                                                    @php
+                                                                        $subcategories = $layout_subcategories->where('category_id', $category->id);
+                                                                    @endphp
+
+                                                                    @if ($subcategories->isNotEmpty())
+                                                                        <ul class="dropdown-menu">
+                                                                            @foreach ($subcategories as $subcategory)
+                                                                                <li>
+                                                                                    <a
+                                                                                        href="{{ route('category.show', ['categoryId' => $category->id, 'subcategoryId' => $subcategory->id]) }}">
+                                                                                        <img class="img menu" alt=""
+                                                                                            src="{{ asset('storage/' . $subcategory->image) }}" />
+                                                                                        <span>{{ $subcategory->name }}</span>
+                                                                                    </a>
+                                                                                </li>
+                                                                            @endforeach
+                                                                        </ul>
+                                                                    @endif
+                                                                </li>
+                                @endforeach
                             </ul>
+
+
                         </li>
 
                         <li class="nav-item">
@@ -610,7 +459,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="https://vlclone.com/check_live">
+                            <a href="https://dongvanfb.net/check_live_uid/">
                                 <span class="icon-holder">
                                     <i class="anticon anticon-account-book" style="color:#FF6600"></i>
                                 </span>
@@ -618,26 +467,10 @@
                             </a>
                         </li>
                         <li class="header-nav">HỖ TRỢ</li>
-                        <li class="nav-item">
-                            <a href="https://vlclone.com/v1_api_docs">
-                                <span class="icon-holder">
-                                    <i class="anticon anticon-api" style="color:tomato"></i>
-                                </span>
-                                <span class="title">Tài Liệu API V1</span>
-                            </a>
-                        </li>
+
 
                         <li class="nav-item">
-                            <a href="https://vlclone.com/v2_api_docs">
-                                <span class="icon-holder">
-                                    <i class="anticon anticon-api" style="color:tomato"></i>
-                                </span>
-                                <span class="title">Tài Liệu API V2</span>
-                            </a>
-                        </li>
-
-                        <li class="nav-item">
-                            <a href="https://vlclone.com/contact">
+                            <a href="{{route('contact')}}">
                                 <span class="icon-holder">
                                     <i class="anticon anticon-contacts" style="color:#888888"></i>
                                 </span>
@@ -646,7 +479,7 @@
                         </li>
 
                         <li class="nav-item">
-                            <a href="https://vlclone.com/blogs">
+                            <a href="{{route('post.site')}}">
                                 <span class="icon-holder">
                                     <i class="anticon anticon-book" style="color:orange"></i>
                                 </span>
@@ -739,6 +572,28 @@
             $('#user_log').DataTable();
         });
     </script>
+    <script type="text/javascript">
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({
+                pageLanguage: 'vi', // Ngôn ngữ mặc định là Tiếng Việt
+                autoDisplay: false
+            }, 'google_translate_element');
+        }
+
+        function changeLanguage(lang) {
+            var translateElement = document.querySelector('.goog-te-combo');
+            if (translateElement) {
+                translateElement.value = lang;
+                translateElement.dispatchEvent(new Event('change'));
+            }
+        }
+
+        function resetTranslate() {
+            changeLanguage('vi');
+        }
+    </script>
+    <script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
 
 </body>
 

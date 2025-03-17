@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Models\GenrePost;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class GenrePostController extends Controller
 {
@@ -27,6 +28,15 @@ class GenrePostController extends Controller
             'type' => 'in:DANH SÁCH HƯỚNG DẪN CƠ BẢN,DANH SÁCH THỦ THUẬT KHÁC'
         ]);
 
+        // Tạo slug từ tên
+        $slug = Str::slug($validatedData['name']);
+
+        // Kiểm tra xem slug đã tồn tại chưa
+        $count = GenrePost::whereRaw("slug RLIKE '^{$slug}(-[0-9]+)?$'")->count();
+
+        // Nếu slug đã tồn tại thì thêm số vào cuối
+        $validatedData['slug'] = $count ? "{$slug}-{$count}" : $slug;
+
         GenrePost::create($validatedData);
 
         return redirect()->route('genre_posts.index')
@@ -45,6 +55,20 @@ class GenrePostController extends Controller
             'status' => 'in:active,inactive',
             'type' => 'in:DANH SÁCH HƯỚNG DẪN CƠ BẢN,DANH SÁCH THỦ THUẬT KHÁC'
         ]);
+
+        // Kiểm tra xem tên có thay đổi không
+        if ($genrePost->name !== $validatedData['name']) {
+            // Tạo slug từ tên mới
+            $slug = Str::slug($validatedData['name']);
+
+            // Kiểm tra xem slug đã tồn tại chưa (ngoại trừ chính nó)
+            $count = GenrePost::whereRaw("slug RLIKE '^{$slug}(-[0-9]+)?$'")
+                ->where('id', '!=', $genrePost->id)
+                ->count();
+
+            // Nếu slug đã tồn tại thì thêm số vào cuối
+            $validatedData['slug'] = $count ? "{$slug}-{$count}" : $slug;
+        }
 
         $genrePost->update($validatedData);
 

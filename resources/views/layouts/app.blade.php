@@ -171,6 +171,14 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
                                     </ul>
 
                                 </li>
+                                <li class="treeview {{ Request::is('support*') ? 'active' : '' }}">
+                                    <a href="{{ route('support.index') }}">
+                                        <img src="{{ asset('backend_admin/images/support-svgrepo-com.svg') }}"
+                                            alt="Google" width="20" height="20"> Hỗ trợ
+
+
+                                    </a>
+                                </li>
                                   <li class="treeview {{ Request::is('product*') ? 'active' : '' }}">
                                     <a href="{{ route('product.index') }}">
                                         <img src="{{ asset('backend_admin/images/candidate-for-elections-svgrepo-com.svg') }}"

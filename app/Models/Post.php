@@ -15,4 +15,5 @@ class Post extends Model
     {
         return $this->belongsTo(GenrePost::class);
     }
+
 }
