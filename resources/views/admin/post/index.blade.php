@@ -35,7 +35,7 @@
                     <td>{{ $post->id }}</td>
                     <td>
                         @if($post->image)
-                            <img src="{{ Storage::url($post->image) }}" alt="{{ $post->name }}"
+                            <img src="{{ asset('storage/' . $post->image)}}" alt="{{ $post->name }}"
                                  style="max-width: 80px; max-height: 80px; object-fit: cover;">
                         @else
                             <span class="badge bg-secondary">Không có ảnh</span>
@@ -68,7 +68,7 @@
             </tbody>
         </table>
     </div>
-  
+
 </div>
 @stop
 

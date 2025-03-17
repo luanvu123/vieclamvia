@@ -3,7 +3,7 @@
 @section('title', 'Chỉnh Sửa Bài Viết')
 
 @section('content_header')
-    <h1>Chỉnh Sửa Bài Viết</h1>
+<h1>Chỉnh Sửa Bài Viết</h1>
 @stop
 
 @section('content')
@@ -18,7 +18,7 @@
             <div class="form-group">
                 <label>Tên Bài Viết</label>
                 <input type="text" name="name" class="form-control @error('name') is-invalid @enderror"
-                       value="{{ old('name', $post->name) }}" required>
+                    value="{{ old('name', $post->name) }}" required>
                 @error('name')
                     <span class="invalid-feedback">{{ $message }}</span>
                 @enderror
@@ -29,8 +29,7 @@
                 <select name="genre_post_id" class="form-control @error('genre_post_id') is-invalid @enderror" required>
                     <option value="">Chọn Thể Loại</option>
                     @foreach($genrePosts as $genrePost)
-                        <option value="{{ $genrePost->id }}"
-                            {{ old('genre_post_id', $post->genre_post_id) == $genrePost->id ? 'selected' : '' }}>
+                        <option value="{{ $genrePost->id }}" {{ old('genre_post_id', $post->genre_post_id) == $genrePost->id ? 'selected' : '' }}>
                             {{ $genrePost->name }}
                         </option>
                     @endforeach
@@ -42,15 +41,16 @@
 
             <div class="form-group">
                 <label>Mô Tả</label>
-                <textarea name="description" id="summary2" class="form-control" rows="5">{{ old('description', $post->description) }}</textarea>
+                <textarea name="description" id="summary2" class="form-control"
+                    rows="5">{{ old('description', $post->description) }}</textarea>
             </div>
 
             <div class="form-group">
                 <label>Hình Ảnh Hiện Tại</label>
                 <div>
                     @if($post->image)
-                        <img src="{{ Storage::url($post->image) }}" alt="{{ $post->name }}"
-                             style="max-width: 200px; max-height: 200px; object-fit: cover;">
+                        <img src="{{ asset('storage/' . $post->image)}}" alt="{{ $post->name }}"
+                            style="max-width: 200px; max-height: 200px; object-fit: cover;">
                     @else
                         <span class="badge bg-secondary">Không có ảnh</span>
                     @endif
@@ -61,7 +61,7 @@
                 <label>Thay Đổi Hình Ảnh</label>
                 <div class="custom-file">
                     <input type="file" name="image" class="custom-file-input @error('image') is-invalid @enderror"
-                           id="customFile">
+                        id="customFile">
                     <label class="custom-file-label" for="customFile">Chọn hình ảnh mới</label>
                 </div>
                 @error('image')
