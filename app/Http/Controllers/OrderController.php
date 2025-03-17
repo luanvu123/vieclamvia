@@ -41,7 +41,7 @@ class OrderController extends Controller
             'product_id' => $product->id,
             'quantity' => $request->quantity,
             'total_price' => $totalPrice,
-            'status' => 'pending',
+            'status' => 'success',
         ]);
 
         // Lấy các stock cần thiết và tạo order_detail tương ứng
@@ -57,13 +57,13 @@ class OrderController extends Controller
             $stock->delete();
         }
         $product->updateQuantityFromStock();
-  Deposit::create([
-        'customer_id' => $customer->id,
-        'money' => $totalPrice,
-        'type' => 'mua hàng',
-        'content' => 'Thanh toán thành công đơn hàng ' . $order->order_key,
-        'status' => 'thành công',
-    ]);
+        Deposit::create([
+            'customer_id' => $customer->id,
+            'money' => $totalPrice,
+            'type' => 'mua hàng',
+            'content' => 'Thanh toán thành công đơn hàng ' . $order->order_key,
+            'status' => 'thành công',
+        ]);
 
         return response()->json(['success' => 'Đơn hàng đã được tạo thành công!', 'order' => $order]);
     }

@@ -84,7 +84,7 @@
                                 <span>Tổng Nạp Tháng</span>
                             </div>
                             <div class="text-center">
-                                <span class="wallet-my">{{ number_format($customer->balance, 0, ',', '.') }} VND
+                                <span class="wallet-my">{{ number_format($customer->Balance, 0, ',', '.') }} VND
                                 </span>
                                 <p class="m-b-5 m-t-10">Cấp Bậc: <span class="account-level bg-user-level bg-1"> {{ $customer->typeCustomer->name ?? 'Chưa được phân loại' }}</span>
                                 </p>

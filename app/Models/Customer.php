@@ -17,10 +17,6 @@ class Customer extends Authenticatable
         'avatar',
         'phone',
         'url_facebook',
-        'Front_ID_card_image',
-        'Back_ID_card_image',
-        'Portrait_image',
-        'isTelegram',
         'isApi',
         'is2Fa',
         'google2fa_secret',
@@ -30,11 +26,9 @@ class Customer extends Authenticatable
         'Status',
         'password',
         'google_id',
-        'isEkyc',
         'last_active_at',
         'account_number',
-        'isSeller',
-         'type_customer_id'
+        'type_customer_id'
 
     ];
 
@@ -56,15 +50,30 @@ class Customer extends Authenticatable
 
         return $idCustomer;
     }
-     public function loginHistories()
+    public function loginHistories()
     {
         return $this->hasMany(LoginHistory::class);
     }
     // App\Models\Customer.php
 
-public function typeCustomer()
+    public function typeCustomer()
+    {
+        return $this->belongsTo(TypeCustomer::class, 'type_customer_id');
+    }
+// Trong class Customer
+public function orders()
 {
-    return $this->belongsTo(TypeCustomer::class, 'type_customer_id');
+    return $this->hasMany(Order::class);
 }
-
+ public function deposits(): HasMany
+    {
+        return $this->hasMany(Deposit::class);
+    }
+ public function totalDeposit()
+    {
+        return $this->deposits()
+                    ->where('type', 'nạp tiền')
+                    ->where('status', 'thành công')
+                    ->sum('money');
+    }
 }

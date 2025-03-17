@@ -15,8 +15,9 @@
                             <th>Email</th>
                             <th>SĐT</th>
                             <th>Số dư</th>
+                            <th>Tổng nạp</th>
                             <th>Trạng thái</th>
-                           
+
                             <th>Thao tác</th>
                         </tr>
                     </thead>
@@ -38,7 +39,8 @@
                                 </td>
                                 <td>{{ $customer->email }}</td>
                                 <td>{{ $customer->phone }}</td>
-                                <td>{{ number_format($customer->balance) }} VNĐ</td>
+                                <td>{{ number_format($customer->Balance) }} VNĐ</td>
+                                 <td>{{ number_format($customer->total_deposit, 0, ',', '.') }} VND</td>
                                 <td>
                                     <span class="badge {{ $customer->Status ? 'badge-success' : 'badge-danger' }}">
                                         {{ $customer->Status ? 'Hoạt động' : 'Bị khóa' }}

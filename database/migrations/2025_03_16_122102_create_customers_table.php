@@ -20,7 +20,7 @@ return new class extends Migration {
             $table->boolean('is2Fa')->default(false);
             $table->string('google2fa_secret')->nullable();
             $table->string('idCustomer')->unique();
-            $table->decimal('balance', 15, 2)->default(0);
+            $table->decimal('Balance', 15, 2)->default(0);
             $table->boolean('isOnline')->default(false);
             $table->string('google_id')->nullable();
             $table->rememberToken()->nullable();

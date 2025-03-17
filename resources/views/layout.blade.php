@@ -152,7 +152,13 @@
 
                         @if (Auth::guard('customer')->check())
                             <!-- Menu thả xuống khi đã đăng nhập -->
+<div class="user-details">
+                                    Số dư: <span
+                                        class="total-load">{{ number_format(Auth::guard('customer')->user()->Balance, 0, ',', '.') }}
+                                        VND</span>
+                                </div>
                             <li class="dropdown dropdown-animated scale-left">
+
                                 <div class="pointer" data-toggle="dropdown">
                                     <div class="avatar avatar-image m-h-10 m-r-15">
                                         <img src="{{ asset('imgs/verify-user.svg') }}" width="48" height="48" alt="User" />
@@ -363,7 +369,7 @@
                     <ul class="side-nav-menu scrollable">
                         <li class="header-nav">Menu</li>
                         <li class="nav-item">
-                            <a href="https://vlclone.com">
+                            <a href="{{route('/')}}">
                                 <span class="icon-holder">
                                     <i class="anticon anticon-home" style="color:tomato"></i>
                                 </span>
@@ -371,7 +377,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="https://vlclone.com/orders" class="auth-required">
+                            <a href="{{route('customer.orders')}}" class="auth-required">
                                 <span class="icon-holder">
                                     <i class="anticon anticon-ordered-list" style="color:tomato"></i>
                                 </span>
@@ -384,7 +390,7 @@
                                 <span class="icon-holder">
                                     <i class="anticon anticon-shopping-cart" style="color:tomato"></i>
                                 </span>
-                                <span class="title link-shop" data-link="https://vlclone.com/shop">Mua Hàng</span>
+                                <span class="title link-shop" data-link="">Mua Hàng</span>
                                 <span class="arrow">
                                     <i class="arrow-icon"></i>
                                 </span>
@@ -425,7 +431,7 @@
                         </li>
 
                         <li class="nav-item">
-                            <a href="https://vlclone.com/warranty_policy">
+                            <a href="{{route('warranty_policy')}}">
                                 <span class="icon-holder">
                                     <i class="anticon anticon-paper-clip" style="color:tomato"></i>
                                 </span>
@@ -442,16 +448,9 @@
                                 <span class="title">Nạp Tiền</span>
                             </a>
                         </li>
+
                         <li class="nav-item">
-                            <a href="{{route('type')}}" class="auth-required">
-                                <span class="icon-holder">
-                                    <i class="anticon anticon-percentage" style="color:#FF6600"></i>
-                                </span>
-                                <span class="title">Ưu Đãi</span>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="https://vlclone.com/histories" class="auth-required">
+                            <a href="{{route('customer.deposits.index')}}" class="auth-required">
                                 <span class="icon-holder">
                                     <i class="anticon anticon-clock-circle" style="color:#FF6600"></i>
                                 </span>
@@ -499,7 +498,7 @@
     </div>
 
 
-    <a href="https://www.facebook.com/hethongcloneviabm" id="linkzalo" target="_blank" rel="noopener noreferrer">
+    <a href="{{$layout_info->url_facebook}}" id="linkzalo" target="_blank" rel="noopener noreferrer">
         <div id="fcta-zalo-tracking" class="fcta-zalo-mess">
             <span id="fcta-zalo-tracking">Support Now</span>
         </div>
@@ -526,21 +525,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <p class="text-violet font-600 font-size-17">🔔 Update Tool Mua Hàng API</p>
-                    <p><span style="color:#000000">Fix lỗi check balance</span><br />
-                        <span style="color:#000000">Link dowload tool Auto Buy</span>: <a
-                            href="https://www.dropbox.com/scl/fi/87ikyu1kryg4e3nqffzap/AutoBuy-VLclone.com.rar?rlkey=taiibv5qz6vycxyiokj55xzon&amp;st=fcpcsydz&amp;dl=0">Tải
-                            ngay!</a><br />
-                        -----------------------<br />
-                        <span style="color:#ffffff"><span style="background-color:#3498db"><strong>️🎯 Update
-                                    Clone:</strong></span></span><br />
-                        <span style="font-family:Courier New,Courier,monospace">- Clone United States<br />
-                            - Clone Australia<br />
-                            - Clone Canada<br />
-                            - Clone Germany&nbsp;</span><br />
-                        <span style="font-family:Courier New,Courier,monospace">- Clone India</span><br />
-                        Đ&atilde; load sẳn ads (ng&agrave;y tạo TKQC c&ugrave;ng ng&agrave;y reg)!
-                    </p>
+                    {!!$layout_info->notice_modal!!}
                 </div>
                 <div class="modal-footer">
                     <button class="btn btn-success btn-md btn-nw m-r-5" id="btn-hide-notify">

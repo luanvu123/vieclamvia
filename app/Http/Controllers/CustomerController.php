@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Deposit;
+use App\Models\Order;
 use App\Models\TypeCustomer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -20,13 +22,35 @@ class CustomerController extends Controller
             'loginHistories',
         ));
     }
-    public function type()
+    public function indexOrder()
     {
-        $typeCustomers = TypeCustomer::where('status', 'active')->get();
+        $customer = Auth::guard('customer')->user();
+        $orders = $customer->orders()->orderBy('created_at', 'desc')->get();
 
-        return view('pages.type', compact('typeCustomers'));
+        return view('pages.order', compact('orders', 'customer'));
     }
 
+    public function indexDeposit()
+    {
+        $customer = Auth::guard('customer')->user();
+        $deposits = Deposit::where('customer_id', $customer->id)
+            ->orderBy('created_at', 'desc')
+            ->get();
+
+        return view('pages.deposit', compact('deposits', 'customer'));
+    }
+
+    public function indexOrderDetail($id)
+    {
+        $customer = Auth::guard('customer')->user();
+        $order = Order::where('id', $id)
+            ->where('customer_id', $customer->id)
+            ->firstOrFail();
+
+        $orderDetails = $order->orderDetails()->get();
+
+        return view('pages.order_detail', compact('order', 'orderDetails', 'customer'));
+    }
     public function bank()
     {
         $customer = Auth::guard('customer')->user()->load('typeCustomer');

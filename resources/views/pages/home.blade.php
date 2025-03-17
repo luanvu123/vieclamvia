@@ -8,39 +8,7 @@
                     <img src="{{asset('imgs/notify.svg')}}" alt="" />
                     <div class="notify-content-html">
                         <p class="text-violet font-600 font-size-17">Thông báo</p>
-                        <h3><span style="color:#000000"><strong>T&agrave;i nguy&ecirc;n tr&ecirc;n website
-                                    chỉ phục vụ mục đ&iacute;ch&nbsp;QUẢNG C&Aacute;O. Kh&aacute;ch
-                                    h&agrave;ng c&oacute; h&agrave;nh vi sử dụng vi phạm ph&aacute;p luật
-                                    Việt Nam ch&uacute;ng t&ocirc;i kh&ocirc;ng chịu bất cứ tr&aacute;ch
-                                    nhiệm n&agrave;o !</strong></span></h3>
-
-                        <p><span style="color:#000000"><strong>👉&nbsp;</strong>Kh&aacute;ch h&agrave;ng
-                                cần&nbsp;<strong>bảo h&agrave;nh BM, VIA&nbsp;</strong>-&gt;
-                                Chat&nbsp;Support Fanpage</span><strong><span style="color:#000000">:&nbsp;</span><em><span
-                                        style="color:#ffffff"><span style="background-color:#00ccff">&nbsp;</span></span><a
-                                        href="https://m.me/102980577851649"><span style="color:#ffffff"><span
-                                                style="background-color:#00ccff">CHAT
-                                                NOW</span></span></a><span style="color:#ffffff"><span
-                                            style="background-color:#00ccff">!&nbsp;</span></span></em></strong>
-                        </p>
-
-                        <p><span style="color:#000000"><strong>⏱&nbsp;</strong>Thời Gian Hỗ
-                                Trợ:<strong>&nbsp;</strong>S&aacute;ng:<strong>&nbsp;09:30 - 12:00
-                                    |&nbsp;</strong>Chiều:<strong>&nbsp;14:00 - 19:00
-                                    |&nbsp;</strong>Tối:<strong>&nbsp;20:00 - 02:00</strong></span></p>
-
-                        <p><span style="color:#000000"><strong>👉&nbsp;</strong>Group
-                                Zalo</span><strong><span style="color:#000000">&nbsp;chia sẻ ADS, cập nhật
-                                    th&ocirc;ng b&aacute;o&nbsp;(kh&ocirc;ng b&aacute;n
-                                    h&agrave;ng):</span><span style="color:#ffffff">&nbsp;</span><em><a
-                                        href="https://zalo.me/g/bvkisc776"><span style="color:#f1c40f"><span
-                                                style="background-color:#ff99cc">&nbsp;</span></span><span
-                                            style="color:#ffffcc"><span style="background-color:#ff99cc">THAM
-                                                GIA</span></span></a><span style="color:#ffffcc"><span
-                                            style="background-color:#ff99cc">&nbsp;NGAY!</span></span><span
-                                        style="color:#ffff99"><span
-                                            style="background-color:#ff99cc">&nbsp;</span></span></em></strong><br />
-                            &nbsp;</p>
+                        {!! $layout_info->notice!!}
                     </div>
                     <span class="icon-close-notify anticon anticon-close"></span>
                 </div>
@@ -115,291 +83,61 @@
 
         </div>
         <div class="row area-history">
+            <!-- Lịch sử mua hàng -->
             <div class="col-sm-12 col-lg-6">
                 <div class="card">
                     <div class="card-header info-card-header">
                         Mua Hàng Gần Đây
                     </div>
                     <div class="card-body">
-                        <div class="history-item">
-                            <b>
-                                <span style="color: green;"> <i class="fa fa-bell"></i>
-                                    ave12****
-                                </span>:
-                                <span style="color: red; ">Đã mua 1 Clone Việt Nam Verify Fvia -
-                                    5,000VND</span>
-                            </b>
-                            <span class="right">
-                                <span class="badge badge-primary">
-                                    <em>4 seconds ago</em>
+                        @foreach ($orders as $order)
+                            <div class="history-item">
+                                <b>
+                                    <span style="color: green;"> <i class="fa fa-bell"></i>
+                                        {{ Str::limit($order->customer->username, 2, '****') }}
+                                    </span>:
+                                    <span style="color: red;">Đã mua {{ $order->quantity }} {{ $order->product->name }} -
+                                        {{ number_format($order->total_price) }} VND</span>
+                                </b>
+                                <span class="right">
+                                    <span class="badge badge-primary">
+                                        <em>{{ $order->created_at->diffForHumans() }}</em>
+                                    </span>
                                 </span>
-                            </span>
-                        </div>
-                        <div class="history-item">
-                            <b>
-                                <span style="color: green;"> <i class="fa fa-bell"></i>
-                                    manhcuo****
-                                </span>:
-                                <span style="color: red; ">Đã mua 1 Clone Ngoại Random Live 30P-1H (Up API
-                                    24/24) - 1,800VND</span>
-                            </b>
-                            <span class="right">
-                                <span class="badge badge-primary">
-                                    <em>11 seconds ago</em>
-                                </span>
-                            </span>
-                        </div>
-                        <div class="history-item">
-                            <b>
-                                <span style="color: green;"> <i class="fa fa-bell"></i>
-                                    Long081826****
-                                </span>:
-                                <span style="color: red; ">Đã mua 25 Clone Ngoại Random Live 30P-1H (Up API
-                                    24/24) - 40,500VND</span>
-                            </b>
-                            <span class="right">
-                                <span class="badge badge-primary">
-                                    <em>15 minutes ago</em>
-                                </span>
-                            </span>
-                        </div>
-                        <div class="history-item">
-                            <b>
-                                <span style="color: green;"> <i class="fa fa-bell"></i>
-                                    procy****
-                                </span>:
-                                <span style="color: red; ">Đã mua 1 Via United States Siêu Cổ (No2FA) [CP:
-                                    1] - 250,000VND</span>
-                            </b>
-                            <span class="right">
-                                <span class="badge badge-primary">
-                                    <em>26 minutes ago</em>
-                                </span>
-                            </span>
-                        </div>
-                        <div class="history-item">
-                            <b>
-                                <span style="color: green;"> <i class="fa fa-bell"></i>
-                                    ngov****
-                                </span>:
-                                <span style="color: red; ">Đã mua 1 Via Chat Support (No2FA) -
-                                    89,100VND</span>
-                            </b>
-                            <span class="right">
-                                <span class="badge badge-primary">
-                                    <em>32 minutes ago</em>
-                                </span>
-                            </span>
-                        </div>
-                        <div class="history-item">
-                            <b>
-                                <span style="color: green;"> <i class="fa fa-bell"></i>
-                                    vinhso****
-                                </span>:
-                                <span style="color: red; ">Đã mua 1 Clone Instagram US - 2,700VND</span>
-                            </b>
-                            <span class="right">
-                                <span class="badge badge-primary">
-                                    <em>36 minutes ago</em>
-                                </span>
-                            </span>
-                        </div>
-                        <div class="history-item">
-                            <b>
-                                <span style="color: green;"> <i class="fa fa-bell"></i>
-                                    vinhso****
-                                </span>:
-                                <span style="color: red; ">Đã mua 1 Clone Instagram US - 2,700VND</span>
-                            </b>
-                            <span class="right">
-                                <span class="badge badge-primary">
-                                    <em>44 minutes ago</em>
-                                </span>
-                            </span>
-                        </div>
-                        <div class="history-item">
-                            <b>
-                                <span style="color: green;"> <i class="fa fa-bell"></i>
-                                    Long081826****
-                                </span>:
-                                <span style="color: red; ">Đã mua 1 Clone Việt Nam Verify Fvia (No2FA) -
-                                    3,600VND</span>
-                            </b>
-                            <span class="right">
-                                <span class="badge badge-primary">
-                                    <em>48 minutes ago</em>
-                                </span>
-                            </span>
-                        </div>
-                        <div class="history-item">
-                            <b>
-                                <span style="color: green;"> <i class="fa fa-bell"></i>
-                                    ca****
-                                </span>:
-                                <span style="color: red; ">Đã mua 5 Clone Instagram US - 13,500VND</span>
-                            </b>
-                            <span class="right">
-                                <span class="badge badge-primary">
-                                    <em>53 minutes ago</em>
-                                </span>
-                            </span>
-                        </div>
-                        <div class="history-item">
-                            <b>
-                                <span style="color: green;"> <i class="fa fa-bell"></i>
-                                    Long081826****
-                                </span>:
-                                <span style="color: red; ">Đã mua 1 Clone Mexico (No2FA) - 2,700VND</span>
-                            </b>
-                            <span class="right">
-                                <span class="badge badge-primary">
-                                    <em>55 minutes ago</em>
-                                </span>
-                            </span>
-                        </div>
+                            </div>
+                        @endforeach
                     </div>
                 </div>
             </div>
+
+            <!-- Lịch sử nạp tiền -->
             <div class="col-sm-12 col-lg-6">
                 <div class="card">
                     <div class="card-header info-card-header">
                         Nạp Tiền Gần Đây
                     </div>
                     <div class="card-body">
-                        <div class="history-item">
-                            <b>
-                                <span style="color: green;"> <i class="fa fa-bell"></i>
-                                    procy****
-                                </span>:
-                                <span style="color: red; ">Đã nạp 60,000 VND - Nạp tiền từ ACB</span>
-                            </b>
-                            <span class="right">
-                                <span class="badge badge-primary">
-                                    <em>26 minutes ago</em>
+                        @foreach ($deposits as $deposit)
+                            <div class="history-item">
+                                <b>
+                                    <span style="color: green;"> <i class="fa fa-bell"></i>
+                                        {{ Str::limit($deposit->customer->username, 6, '****') }}
+                                    </span>:
+                                    <span style="color: red;">Đã nạp {{ number_format($deposit->money) }} VND -
+                                        {{ $deposit->content }}</span>
+                                </b>
+                                <span class="right">
+                                    <span class="badge badge-primary">
+                                        <em>{{ $deposit->created_at->diffForHumans() }}</em>
+                                    </span>
                                 </span>
-                            </span>
-                        </div>
-                        <div class="history-item">
-                            <b>
-                                <span style="color: green;"> <i class="fa fa-bell"></i>
-                                    vumjhtan****
-                                </span>:
-                                <span style="color: red; ">Đã nạp 250,000 VND - Nạp tiền từ ACB</span>
-                            </b>
-                            <span class="right">
-                                <span class="badge badge-primary">
-                                    <em>31 minutes ago</em>
-                                </span>
-                            </span>
-                        </div>
-                        <div class="history-item">
-                            <b>
-                                <span style="color: green;"> <i class="fa fa-bell"></i>
-                                    phong****
-                                </span>:
-                                <span style="color: red; ">Đã nạp 20,000 VND - Nạp tiền từ ACB</span>
-                            </b>
-                            <span class="right">
-                                <span class="badge badge-primary">
-                                    <em>4 hours ago</em>
-                                </span>
-                            </span>
-                        </div>
-                        <div class="history-item">
-                            <b>
-                                <span style="color: green;"> <i class="fa fa-bell"></i>
-                                    truo****
-                                </span>:
-                                <span style="color: red; ">Đã nạp 70,000 VND - Nạp tiền từ ACB</span>
-                            </b>
-                            <span class="right">
-                                <span class="badge badge-primary">
-                                    <em>4 hours ago</em>
-                                </span>
-                            </span>
-                        </div>
-                        <div class="history-item">
-                            <b>
-                                <span style="color: green;"> <i class="fa fa-bell"></i>
-                                    pha****
-                                </span>:
-                                <span style="color: red; ">Đã nạp 175,000 VND - Nạp tiền từ ACB</span>
-                            </b>
-                            <span class="right">
-                                <span class="badge badge-primary">
-                                    <em>5 hours ago</em>
-                                </span>
-                            </span>
-                        </div>
-                        <div class="history-item">
-                            <b>
-                                <span style="color: green;"> <i class="fa fa-bell"></i>
-                                    long7****
-                                </span>:
-                                <span style="color: red; ">Đã nạp 99,000 VND - Nạp tiền từ ACB</span>
-                            </b>
-                            <span class="right">
-                                <span class="badge badge-primary">
-                                    <em>5 hours ago</em>
-                                </span>
-                            </span>
-                        </div>
-                        <div class="history-item">
-                            <b>
-                                <span style="color: green;"> <i class="fa fa-bell"></i>
-                                    lam199****
-                                </span>:
-                                <span style="color: red; ">Đã nạp 50,000 VND - Nạp tiền từ ACB</span>
-                            </b>
-                            <span class="right">
-                                <span class="badge badge-primary">
-                                    <em>14 hours ago</em>
-                                </span>
-                            </span>
-                        </div>
-                        <div class="history-item">
-                            <b>
-                                <span style="color: green;"> <i class="fa fa-bell"></i>
-                                    vinh****
-                                </span>:
-                                <span style="color: red; ">Đã nạp 100,000 VND - Nạp tiền từ ACB</span>
-                            </b>
-                            <span class="right">
-                                <span class="badge badge-primary">
-                                    <em>16 hours ago</em>
-                                </span>
-                            </span>
-                        </div>
-                        <div class="history-item">
-                            <b>
-                                <span style="color: green;"> <i class="fa fa-bell"></i>
-                                    Thuy****
-                                </span>:
-                                <span style="color: red; ">Đã nạp 100,000 VND - Nạp tiền từ ACB</span>
-                            </b>
-                            <span class="right">
-                                <span class="badge badge-primary">
-                                    <em>17 hours ago</em>
-                                </span>
-                            </span>
-                        </div>
-                        <div class="history-item">
-                            <b>
-                                <span style="color: green;"> <i class="fa fa-bell"></i>
-                                    huongthu5195gmai****
-                                </span>:
-                                <span style="color: red; ">Đã nạp 120,000 VND - Nạp tiền từ ACB</span>
-                            </b>
-                            <span class="right">
-                                <span class="badge badge-primary">
-                                    <em>17 hours ago</em>
-                                </span>
-                            </span>
-                        </div>
+                            </div>
+                        @endforeach
                     </div>
                 </div>
             </div>
         </div>
+
         <div id="modalPurchase" class="modal fade" role="dialog">
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">

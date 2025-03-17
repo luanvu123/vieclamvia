@@ -13,7 +13,7 @@
                         Chấp nhận bảo hành
                     </div>
                     <div class="card-body">
-
+                          {!! $layout_info->warranty_policy_success!!}
                     </div>
                 </div>
             </div>
@@ -21,7 +21,7 @@
             <div class="col-sm-6">
                 <div class="card">
                     <div class="card-header card-bg-2">
-                        Từ chối bảo hành
+                           {!! $layout_info->warranty_policy_error!!}
                     </div>
                     <div class="card-body">
 

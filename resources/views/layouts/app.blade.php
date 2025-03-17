@@ -123,7 +123,7 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
                                     $segment = Request::segment(1);
                                 @endphp
                                 <li
-                                    class="treeview {{ Request::is('users*') || Request::is('genre_posts*') || Request::is('subcategories*') || Request::is('admin/info/edit*') || Request::is('categories*') ? 'active' : '' }}">
+                                    class="treeview {{ Request::is('users*') || Request::is('genre_posts*') || Request::is('banks*')|| Request::is('subcategories*') || Request::is('admin/info/edit*') || Request::is('categories*') ? 'active' : '' }}">
                                     <a href="#">
                                         <img src="{{ asset('backend_admin/images/9165478_unbox_package_icon.svg') }}"
                                             alt="Google" width="20" height="20">
@@ -155,12 +155,7 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
                                                     alt="Google" width="20" height="20"> Thể loại bài viết
                                             </a>
                                         </li>
-                                          <li class="treeview {{ Request::is('type_customers*') ? 'active' : '' }}">
-                                    <a href="{{ route('type_customers.index') }}">
-                                        <img src="{{ asset('backend_admin/images/support-svgrepo-com.svg') }}" alt="Google"
-                                            width="20" height="20"> Loại khách hàng
-                                    </a>
-                                </li>
+
                                  <li class="{{ Request::is('banks*') ? 'active' : '' }}">
                                             <a href="{{ route('banks.index') }}">
                                                 <img src="{{ asset('backend_admin/images/3018587_admin_administrator_ajax_options_permission_icon.svg') }}"
@@ -186,6 +181,12 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
                                         <span> Quản lý gian hàng</span>
                                     </a>
                                 </li>
+                                  <li class="{{ Request::is('info/edit*') ? 'active' : '' }}">
+                                            <a href="{{ route('info.edit') }}">
+                                                <img src="{{ asset('backend_admin/images/5355692_code_coding_development_programming_web_icon.svg') }}"
+                                                    alt="Google" width="20" height="20"> Quản lý giao diện
+                                            </a>
+                                        </li>
                                    <li class="treeview {{ Request::is('customer-manage*') ? 'active' : '' }}">
                                     <a href="{{ route('customer-manage.index') }}">
                                         <img src="{{ asset('backend_admin/images/candidate-for-elections-svgrepo-com.svg') }}"
@@ -221,6 +222,25 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
     </li>
 @endif
 
+  <li class="{{ Request::is('order-manage*') ? 'active' : '' }}">
+                                    <a href="{{ route('order-manage.index') }}">
+                                        <img src="{{ asset('backend_admin/images/shopping-cart-reversed-svgrepo-com.svg') }}"
+                                            width="20" height="20">
+                                        <span> Quản lý đơn hàng</span>
+
+                                        @if (Auth::check())
+                                                                        @php
+                                                                            $recentOrderCount = \App\Models\Order::where('created_at', '>=', \Carbon\Carbon::now()->subDay())->count();
+                                                                        @endphp
+
+                                                                        @if ($recentOrderCount > 0)
+                                                                            <span
+                                                                                class="label label-primary pull-right">{{ str_pad($recentOrderCount, 2, '0', STR_PAD_LEFT) }}</span>
+
+                                                                        @endif
+                                        @endif
+                                    </a>
+                                </li>
 
 
 
@@ -309,64 +329,59 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
             <div id="page-wrapper">
                 <div class="main-page">
                     <div class="col_3">
-                        <!-- layout_customer -->
-                        <div class="col-md-3 widget widget1">
+                         <a href="{{ route('customer-manage.index') }}" style="text-decoration: none; color: inherit;">
+                          <div class="col-md-3 widget widget1">
                             <div class="r3_counter_box">
                                 <i class="pull-left fa fa-dollar icon-rounded"></i>
                                 <div class="stats">
-                                    <h5><strong></strong></h5>
+                                    <h5><strong>{{ $layout_customer }}</strong></h5>
                                     <span>Khách hàng</span>
                                 </div>
                             </div>
                         </div>
+                    </a>
 
                         <!-- layout_order -->
-                        <a href="" style="text-decoration: none; color: inherit;">
+                        <a href="{{ route('order-manage.index') }}" style="text-decoration: none; color: inherit;">
                             <div class="col-md-3 widget widget1">
                                 <div class="r3_counter_box">
                                     <i class="pull-left fa fa-laptop user1 icon-rounded"></i>
                                     <div class="stats">
-                                        <h5><strong></strong></h5>
+                                        <h5><strong>{{ $layout_order }}</strong></h5>
                                         <span>Đơn hàng</span>
                                     </div>
                                 </div>
                             </div>
                         </a>
-
-                        <a href="" style="text-decoration: none; color: inherit;">
+                         <a href="{{ route('order-manage.index') }}" style="text-decoration: none; color: inherit;">
                             <div class="col-md-3 widget widget1">
                                 <div class="r3_counter_box">
                                     <i class="pull-left fa fa-money user2 icon-rounded"></i>
                                     <div class="stats">
-                                        <h5><strong></strong></h5>
+                                        <h5><strong>{{ $layout_order_detail }}</strong></h5>
                                         <span>TK đã bán</span>
                                     </div>
                                 </div>
                             </div>
                         </a>
-
-
-                        <!-- layout_support -->
-                        <a href="" style="text-decoration: none; color: inherit;">
+                          <a href="{{ route('posts.index') }}" style="text-decoration: none; color: inherit;">
                             <div class="col-md-3 widget widget1">
                                 <div class="r3_counter_box">
                                     <i class="pull-left fa fa-pie-chart dollar1 icon-rounded"></i>
                                     <div class="stats">
-                                        <h5><strong></strong></h5>
-                                        <span>Hỗ trợ</span>
+                                        <h5><strong>{{ $layout_post }}</strong></h5>
+                                        <span>Bài viết</span>
                                     </div>
                                 </div>
                             </div>
                         </a>
-
-                        <!-- layout_complaint -->
-                        <a href="" style="text-decoration: none; color: inherit;">
+                          <a href="{{ route('product.index') }}" style="text-decoration: none; color: inherit;">
                             <div class="col-md-3 widget">
                                 <div class="r3_counter_box">
                                     <i class="pull-left fa fa-users dollar2 icon-rounded"></i>
                                     <div class="stats">
-                                        <h5><strong></strong></h5>
-                                        <span>Khiếu nại</span>
+                                        <h5><strong>{{ $layout_product }}</strong></h5>
+                                        <span>Sản phẩm</span>
                                     </div>
                                 </div>
                             </div>

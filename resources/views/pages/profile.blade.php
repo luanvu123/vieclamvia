@@ -189,15 +189,11 @@
                 <div class="user-info">
                     <div class="user-name">Mã khách hàng: {{$customer->idCustomer}}</div>
                     <div class="user-details">
-                        Tổng Nạp: <span class="total-load">{{ number_format($customer->balance, 0, ',', '.') }} VND</span>
+                        Sớ dư: <span class="total-load">{{ number_format($customer->Balance, 0, ',', '.') }} VND</span>
                     </div>
                     <div class="user-details">
                         Cấp Bậc: <span class="account-level">{{ $customer->typeCustomer->name ?? 'Chưa được phân loại' }}</span>
                     </div>
-                    <div class="user-details">
-                        Ưu đãi Hạng Giảm: <span class="discount-level">-  {{ $customer->typeCustomer->Discount_percent ?? 0 }}%</span>
-                    </div>
-                    <a href="#" class="nang-cap-btn">NÂNG CẤP</a>
                 </div>
 
                 <div class="tab-container">

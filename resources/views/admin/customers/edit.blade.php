@@ -34,6 +34,8 @@
                             <input type="text" class="form-control" id="idCustomer"
                                 value="{{ $customerManage->idCustomer }}" disabled>
                         </div>
+                       
+
                         <div class="form-group">
                             <label for="idCustomer">Mã 2fa</label>
                             <input type="text" class="form-control" id="2faCustomer"
@@ -86,7 +88,7 @@
                             <label for="Balance">Số dư *</label>
                             <div class="input-group">
                                 <input type="number" class="form-control @error('Balance') is-invalid @enderror"
-                                    id="Balance" name="Balance" value="{{ old('Balance', $customerManage->balance) }}"
+                                    id="Balance" name="Balance" value="{{ old('Balance', $customerManage->Balance) }}"
                                     readonly>
                                 <div class="input-group-append">
                                     <span class="input-group-text">VNĐ</span>

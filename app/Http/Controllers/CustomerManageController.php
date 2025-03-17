@@ -14,10 +14,13 @@ class CustomerManageController extends Controller
 
     public function index()
     {
-        $customers = Customer::all();
+        $customers = Customer::all()->map(function ($customer) {
+            $customer->total_deposit = $customer->totalDeposit();
+            return $customer;
+        });
         return view('admin.customers.index', compact('customers'));
     }
-    
+
     public function edit(Customer $customerManage)
     {
          $customerManage->last_active_at = now();
@@ -36,13 +39,10 @@ class CustomerManageController extends Controller
             'Balance' => 'required|numeric',
             'password' => 'nullable|min:6',
             'Status' => 'required|boolean',
-            'isEkyc' => 'required|boolean'
         ]);
-
         $data = [
             'Balance' => $request->Balance,
             'Status' => $request->Status,
-            'isEkyc' => $request->isEkyc
         ];
 
         if ($request->filled('password')) {

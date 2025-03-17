@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\Deposit;
+use App\Models\Order;
 use App\Models\Subcategory;
 use App\Models\Support;
 use Illuminate\Http\Request;
@@ -33,8 +35,20 @@ class SiteController extends Controller
                 }
             ])
             ->get();
+ $deposits = Deposit::where('type', 'nạp tiền')
+        ->latest()
+        ->take(5)
+        ->with('customer')
+        ->get();
 
-        return view('pages.home', compact('categories', 'gradients'));
+    // Lấy lịch sử mua hàng mới nhất
+    $orders = Order::where('status', 'completed')
+        ->latest()
+        ->take(5)
+        ->with(['customer', 'product'])
+        ->get();
+
+        return view('pages.home', compact('categories', 'gradients', 'deposits', 'orders'));
     }
 
     public function category($categoryId, $subcategoryId)
@@ -56,5 +70,8 @@ class SiteController extends Controller
     {
         $supports = Support::where('status', 'active')->get();
         return view('pages.contact', compact('supports'));
+    }
+    public function warrantyPolicy(){
+        return view('pages.warranty');
     }
 }
