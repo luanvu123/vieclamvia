@@ -39,9 +39,9 @@ Route::get('/contact', [SiteController::class, 'indexSupport'])->name('contact')
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::post('/customer/register', [CustomerAuthController::class, 'register'])->name('customer.register');
 Route::post('/customer/login', [CustomerAuthController::class, 'login'])->name('customer.login');
-Route::post('/customer/logout', [CustomerAuthController::class, 'logout'])->name('customer.logout');
 Route::get('/category/{id}', [SiteController::class, 'category'])->name('category');
 Route::get('/category/{categoryId}/{subcategoryId}', [SiteController::class, 'category'])->name('category.show');
+Route::post('/customer/logout', [CustomerAuthController::class, 'logout'])->name('logout.customer');
 
 Route::group(['middleware' => ['auth']], function () {
     Route::resource('users', UserController::class);

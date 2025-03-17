@@ -152,11 +152,11 @@
 
                         @if (Auth::guard('customer')->check())
                             <!-- Menu thả xuống khi đã đăng nhập -->
-<div class="user-details">
-                                    Số dư: <span
-                                        class="total-load">{{ number_format(Auth::guard('customer')->user()->Balance, 0, ',', '.') }}
-                                        VND</span>
-                                </div>
+                            <div class="user-details">
+                                Số dư: <span
+                                    class="total-load">{{ number_format(Auth::guard('customer')->user()->Balance, 0, ',', '.') }}
+                                    VND</span>
+                            </div>
                             <li class="dropdown dropdown-animated scale-left">
 
                                 <div class="pointer" data-toggle="dropdown">
@@ -207,157 +207,138 @@
                                             <i class="anticon font-size-10 anticon-right"></i>
                                         </div>
                                     </a>
-                                    <a href="javascript:void(0);" onclick="onLogout()"
-                                        class="dropdown-item d-block p-h-15 p-v-10">
-                                        <div class="d-flex align-items-center justify-content-between">
-                                            <div>
-                                                <i class="anticon opacity-04 font-size-16 anticon-logout"></i>
-                                                <span class="m-l-10">Đăng xuất</span>
-                                            </div>
-                                            <i class="anticon font-size-10 anticon-right"></i>
-                                        </div>
+                                    <a href="#" onclick="event.preventDefault();
+                                                                                                if (confirm('Bạn có muốn đăng xuất?')) {
+                                                                                                    document.getElementById('logout-form').submit();
+                                                                                                }">
+                                        Thoát
                                     </a>
+                                    <form id="logout-form" action="{{ route('logout.customer') }}" method="POST"
+                                        style="display: none;">
+                                        @csrf
+                                    </form>
                                 </div>
                             </li>
                         @else
+                            <!-- Nút mở Modal -->
                             <button class="btn" id="registerBtn">Đăng ký</button>
                             <button class="btn" id="loginBtn">Đăng nhập</button>
 
-                            <!-- Registration and Login Modal -->
-                            <div id="modal" class="modal">
+                            <!-- Modal Đăng Ký -->
+                            <div id="registerModal" class="modal">
                                 <div class="modal-content">
                                     <span class="close-btn">&times;</span>
-                                    <h2 id="modalTitle">Đăng ký</h2>
-                                    <form id="authForm" method="POST" action="/customer/register">
-                                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                                        <div class="form-group" id="fullNameGroup">
+                                    <h2>Đăng ký</h2>
+
+                                    <form id="registerForm" method="POST" action="/customer/register">
+                                        @csrf
+                                        <div class="form-group">
                                             <label for="fullName">Họ và Tên</label>
-                                            <input type="text" id="fullName" name="name">
+                                            <input type="text" id="fullName" name="name" value="{{ old('name') }}" required>
                                         </div>
                                         <div class="form-group">
                                             <label for="email">Email</label>
-                                            <input type="email" id="email" name="email" required>
+                                            <input type="email" id="email" name="email" value="{{ old('email') }}" required>
                                         </div>
-                                        <div class="form-group" id="phoneGroup">
+                                        <div class="form-group">
                                             <label for="phone">Số Điện Thoại</label>
-                                            <input type="tel" id="phone" name="phone">
+                                            <input type="tel" id="phone" name="phone" value="{{ old('phone') }}" required>
                                         </div>
                                         <div class="form-group">
                                             <label for="password">Mật Khẩu</label>
                                             <input type="password" id="password" name="password" required>
                                         </div>
-                                        <div class="form-group" id="passwordConfirmGroup">
+                                        <div class="form-group">
                                             <label for="password_confirmation">Xác Nhận Mật Khẩu</label>
-                                            <input type="password" id="password_confirmation" name="password_confirmation">
+                                            <input type="password" id="password_confirmation" name="password_confirmation"
+                                                required>
                                         </div>
-                                        <div class="form-group" id="agreeGroup">
-                                            <input type="checkbox" id="agree">
+                                        <div class="form-group">
+                                            <input type="checkbox" id="agree" required>
                                             <label for="agree">Tôi đã đọc và đồng ý với điều khoản</label>
                                         </div>
-                                        <button type="submit" class="btn">Gửi</button>
+                                        <button type="submit" class="btn">Đăng ký</button>
                                     </form>
+                                    <p>Đã có tài khoản? <span id="switchToLogin">Đăng nhập</span></p>
+                                </div>
+                            </div>
 
-                                    <p id="toggleText">Đã có tài khoản? <span id="toggleLink">Đăng nhập</span></p>
+
+                            <!-- Modal Đăng Nhập -->
+                            <div id="loginModal" class="modal">
+                                <div class="modal-content">
+                                    <span class="close-btn">&times;</span>
+                                    <h2>Đăng nhập</h2>
+                                    <form id="loginForm" method="POST" action="/customer/login">
+                                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                        <div class="form-group">
+                                            <label for="loginEmail">Email</label>
+                                            <input type="email" id="loginEmail" name="email" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="loginPassword">Mật Khẩu</label>
+                                            <input type="password" id="loginPassword" name="password" required>
+                                        </div>
+                                        <button type="submit" class="btn">Đăng nhập</button>
+                                        <a href="{{route('contact')}}">Quên mật khẩu</a>
+                                    </form>
+                                    <p>Chưa có tài khoản? <span id="switchToRegister">Đăng ký</span></p>
                                 </div>
                             </div>
 
                             <script>
                                 document.addEventListener('DOMContentLoaded', function () {
-                                    const modal = document.getElementById('modal');
+                                    const registerModal = document.getElementById('registerModal');
+                                    const loginModal = document.getElementById('loginModal');
                                     const registerBtn = document.getElementById('registerBtn');
                                     const loginBtn = document.getElementById('loginBtn');
-                                    const authForm = document.getElementById('authForm');
-                                    const modalTitle = document.getElementById('modalTitle');
-                                    const toggleText = document.getElementById('toggleText');
-                                    const fullNameGroup = document.getElementById('fullNameGroup');
-                                    const phoneGroup = document.getElementById('phoneGroup');
-                                    const passwordConfirmGroup = document.getElementById('passwordConfirmGroup');
-                                    const agreeGroup = document.getElementById('agreeGroup');
-                                    const closeBtn = document.querySelector('.close-btn');
+                                    const closeBtns = document.querySelectorAll('.close-btn');
+                                    const switchToLogin = document.getElementById('switchToLogin');
+                                    const switchToRegister = document.getElementById('switchToRegister');
 
-                                    function showModal(isRegister) {
-                                        modal.style.display = 'block';
-                                        if (isRegister) {
-                                            modalTitle.innerText = 'Đăng ký';
-                                            authForm.action = '/customer/register';
-                                            fullNameGroup.style.display = 'block';
-                                            phoneGroup.style.display = 'block';
-                                            passwordConfirmGroup.style.display = 'block';
-                                            agreeGroup.style.display = 'block';
-                                            toggleText.innerHTML = 'Đã có tài khoản? <span id="toggleLink">Đăng nhập</span>';
-                                        } else {
-                                            modalTitle.innerText = 'Đăng nhập';
-                                            authForm.action = '/customer/login';
-                                            fullNameGroup.style.display = 'none';
-                                            phoneGroup.style.display = 'none';
-                                            passwordConfirmGroup.style.display = 'none';
-                                            agreeGroup.style.display = 'none';
-                                            toggleText.innerHTML = 'Chưa có tài khoản? <span id="toggleLink">Đăng ký</span>';
-                                        }
-                                        attachToggleEvent();
-                                    }
-
-                                    function hideModal() {
-                                        modal.style.display = 'none';
-                                        authForm.reset();
-                                    }
-
-                                    function attachToggleEvent() {
-                                        document.getElementById('toggleLink').onclick = function () {
-                                            if (modalTitle.innerText === 'Đăng ký') {
-                                                showModal(false);
-                                            } else {
-                                                showModal(true);
-                                            }
-                                        };
-                                    }
-
+                                    // Hiển thị Modal Đăng ký
                                     registerBtn.onclick = function () {
-                                        showModal(true);
-                                    };
+                                        registerModal.style.display = 'block';
+                                    }
 
+                                    // Hiển thị Modal Đăng nhập
                                     loginBtn.onclick = function () {
-                                        showModal(false);
-                                    };
+                                        loginModal.style.display = 'block';
+                                    }
 
+                                    // Đóng Modal
+                                    closeBtns.forEach(btn => {
+                                        btn.onclick = function () {
+                                            registerModal.style.display = 'none';
+                                            loginModal.style.display = 'none';
+                                        }
+                                    });
+
+                                    // Chuyển từ Đăng ký sang Đăng nhập
+                                    switchToLogin.onclick = function () {
+                                        registerModal.style.display = 'none';
+                                        loginModal.style.display = 'block';
+                                    }
+
+                                    // Chuyển từ Đăng nhập sang Đăng ký
+                                    switchToRegister.onclick = function () {
+                                        loginModal.style.display = 'none';
+                                        registerModal.style.display = 'block';
+                                    }
+
+                                    // Đóng Modal khi click ra ngoài
                                     window.onclick = function (event) {
-                                        if (event.target === modal) {
-                                            hideModal();
+                                        if (event.target === registerModal) {
+                                            registerModal.style.display = 'none';
                                         }
-                                    };
-
-                                    closeBtn.onclick = function () {  // Thêm phần này để xử lý sự kiện nhấn nút đóng
-                                        hideModal();
-                                    };
-
-                                    authForm.onsubmit = async function (e) {
-                                        e.preventDefault();
-                                        const url = authForm.action;
-                                        const formData = new FormData(authForm);
-
-                                        try {
-                                            const response = await fetch(url, {
-                                                method: 'POST',
-                                                headers: {
-                                                    'X-CSRF-TOKEN': document.querySelector('input[name="_token"]').value
-                                                },
-                                                body: formData
-                                            });
-                                            const result = await response.json();
-
-                                            if (response.ok) {
-                                                alert(result.message);
-                                                location.reload();
-                                            } else {
-                                                alert('Đã xảy ra lỗi! Vui lòng kiểm tra lại thông tin.');
-                                            }
-                                        } catch (error) {
-                                            alert('Đã xảy ra lỗi kết nối!');
+                                        if (event.target === loginModal) {
+                                            loginModal.style.display = 'none';
                                         }
-                                    };
+                                    }
                                 });
-
                             </script>
+
+
                         @endif
 
                     </ul>
@@ -525,7 +506,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    {!!$layout_info->notice_modal!!}
+                    {!! $layout_info->notice_modal !!}
                 </div>
                 <div class="modal-footer">
                     <button class="btn btn-success btn-md btn-nw m-r-5" id="btn-hide-notify">
@@ -539,6 +520,23 @@
 
         </div>
     </div>
+
+    <!-- Script xử lý -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Kiểm tra xem modal đã được ẩn vĩnh viễn chưa
+            if (!localStorage.getItem('hideAlertModal')) {
+                $('#alertModal').modal('show'); // Hiển thị modal nếu chưa được ẩn
+            }
+
+            // Xử lý khi nhấn nút KHÔNG HIỆN LẠI
+            document.getElementById('btn-hide-notify').addEventListener('click', function () {
+                localStorage.setItem('hideAlertModal', 'true'); // Lưu trạng thái vào localStorage
+                $('#alertModal').modal('hide'); // Ẩn modal
+            });
+        });
+    </script>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="{{asset('js/vendors.min.js')}}"></script>
     <script src="{{asset('js/common.js')}}"></script>
@@ -579,7 +577,35 @@
     </script>
     <script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+  <!-- Hiển thị Toast nếu có nhiều lỗi -->
+@if(session('errors') && is_array(session('errors')))
+    <script>
+        $(document).ready(function () {
+            @foreach (session('errors') as $error)
+                toastr.error("{{ $error }}", "Lỗi!");
+            @endforeach
+        });
+    </script>
+@endif
 
+<!-- Hiển thị Toast nếu có một lỗi duy nhất -->
+@if(session('error'))
+    <script>
+        $(document).ready(function () {
+            toastr.error("{{ session('error') }}", "Lỗi!");
+        });
+    </script>
+@endif
+
+<!-- Hiển thị Toast nếu có thông báo thành công -->
+@if(session('success'))
+    <script>
+        $(document).ready(function () {
+            toastr.success("{{ session('success') }}", "Thành công!");
+        });
+    </script>
+@endif
 </body>
 
 </html>

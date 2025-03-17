@@ -11,55 +11,75 @@ use Illuminate\Support\Facades\Validator;
 
 class CustomerAuthController extends Controller
 {
-    public function register(Request $request)
-    {
-        $validator = Validator::make($request->all(), [
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:customers',
-            'phone' => 'required|string|max:20|unique:customers',
-            'password' => 'required|string|min:8|confirmed',
-        ]);
+ public function register(Request $request)
+{
+    $messages = [
+        'name.required' => 'Họ và Tên là bắt buộc.',
+        'email.required' => 'Email là bắt buộc.',
+        'email.email' => 'Định dạng email không hợp lệ.',
+        'email.unique' => 'Email này đã được sử dụng.',
+        'phone.required' => 'Số điện thoại là bắt buộc.',
+        'phone.unique' => 'Số điện thoại này đã được sử dụng.',
+        'password.required' => 'Mật khẩu là bắt buộc.',
+        'password.min' => 'Mật khẩu phải có ít nhất 8 ký tự.',
+        'password.confirmed' => 'Mật khẩu xác nhận không khớp.',
+    ];
 
-        if ($validator->fails()) {
-            return response()->json(['errors' => $validator->errors()], 422);
-        }
+    $validator = Validator::make($request->all(), [
+        'name' => 'required|string|max:255',
+        'email' => 'required|string|email|max:255|unique:customers',
+        'phone' => 'required|string|max:20|unique:customers',
+        'password' => 'required|string|min:8|confirmed',
+    ], $messages);
 
-        $customer = Customer::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'phone' => $request->phone,
-            'password' => Hash::make($request->password),
-            'idCustomer' => Customer::generateUniqueId(),
-            'Status' => 1,
-        ]);
-
-        Auth::guard('customer')->login($customer);
-
-        return response()->json(['message' => 'Đăng ký thành công!']);
+    if ($validator->fails()) {
+        $errors = $validator->errors()->all();
+        session()->flash('errors', $errors); // Truyền lỗi qua session
+        return redirect()->back()->withInput();
     }
 
+    $customer = Customer::create([
+        'name' => $request->name,
+        'email' => $request->email,
+        'phone' => $request->phone,
+        'password' => Hash::make($request->password),
+        'idCustomer' => Customer::generateUniqueId(),
+        'Status' => 1,
+    ]);
 
-    public function login(Request $request)
-    {
-        $credentials = $request->only('email', 'password');
+    Auth::guard('customer')->login($customer);
 
-        if (Auth::guard('customer')->attempt($credentials)) {
+    session()->flash('success', 'Đăng ký thành công!'); // Flash message thành công
+    return redirect()->back();
+}
 
-              // Lưu lịch sử đăng nhập
-            \App\Models\LoginHistory::create([
-                'customer_id' => Auth::guard('customer')->id,
-                'device' => $request->header('User-Agent'),
-            ]);
-           return redirect()->route('profile.site')->with('success', 'Xin chào, ' . Auth::guard('customer')->email);
-        }
 
-        return response()->json(['message' => 'Thông tin đăng nhập không chính xác!'], 401);
+
+
+  public function login(Request $request)
+{
+    $credentials = $request->only('email', 'password');
+
+    if (Auth::guard('customer')->attempt($credentials)) {
+        // Lưu lịch sử đăng nhập
+        \App\Models\LoginHistory::create([
+            'customer_id' => Auth::guard('customer')->id(),
+            'device' => $request->header('User-Agent'),
+        ]);
+
+        session()->flash('success', 'Xin chào, ' . Auth::guard('customer')->user()->email); // Thông báo thành công
+        return redirect()->route('profile.site');
     }
+
+    session()->flash('error', 'Thông tin đăng nhập không chính xác!'); // Thông báo lỗi khi đăng nhập sai
+    return redirect()->back();
+}
+
 
     public function logout()
     {
         Auth::guard('customer')->logout();
 
-        return response()->json(['message' => 'Đăng xuất thành công!']);
+         return redirect()->route('/')->with('success', 'Đã đăng xuất');
     }
 }

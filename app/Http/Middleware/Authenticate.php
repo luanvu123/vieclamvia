@@ -31,7 +31,7 @@ class Authenticate extends Middleware
         if (!$request->expectsJson()) {
             // Nếu guard là 'customer', chuyển hướng đến login.customer
             if (Auth::guard('customer')->check() === false) {
-                return route('login.customer');
+                return redirect()->back()->with('error', 'Vui lòng đăng nhập để tiếp tục.');
             }
 
             return route('login');
