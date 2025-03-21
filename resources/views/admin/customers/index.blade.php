@@ -34,13 +34,13 @@
                                 <td>
 
 
-                                        {{ $customer->name }}
+                                    {{ $customer->name }}
 
                                 </td>
                                 <td>{{ $customer->email }}</td>
                                 <td>{{ $customer->phone }}</td>
                                 <td>{{ number_format($customer->Balance) }} VNĐ</td>
-                                 <td>{{ number_format($customer->total_deposit, 0, ',', '.') }} VND</td>
+                                <td>{{ number_format($customer->total_deposit, 0, ',', '.') }} VND</td>
                                 <td>
                                     <span class="badge {{ $customer->Status ? 'badge-success' : 'badge-danger' }}">
                                         {{ $customer->Status ? 'Hoạt động' : 'Bị khóa' }}
@@ -63,6 +63,15 @@
                                         class="btn btn-info btn-sm">
                                         <i class="fas fa-history"></i> Lịch sử giao dịch
                                     </a>
+                                    <form action="{{ route('customer-manage.destroy', $customer->id) }}" method="POST"
+                                        style="display: inline-block;"
+                                        onsubmit="return confirm('Bạn có chắc chắn muốn xóa khách hàng này không?');">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-danger btn-sm">
+                                            <i class="fas fa-trash-alt"></i> Xóa
+                                        </button>
+                                    </form>
                                 </td>
 
                             </tr>

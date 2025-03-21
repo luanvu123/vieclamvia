@@ -62,8 +62,8 @@
                                                     <div class="card-body text-center">
                                                         <h5>NỘI DUNG CHUYỂN KHOẢN</h5>
                                                         <div class="alert alert-info alert-dismissible fade show">
-                                                            <strong style="font-size: 20px">{{ $bank->content }}
-                                                                {{ $customer->name }}{{$customer->idCustomer}}</strong>
+                                                            <strong style="font-size: 20px">
+                                                                {{ $customer->idCustomer }}</strong>
                                                         </div>
                                                     </div>
                                                 </div>

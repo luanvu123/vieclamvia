@@ -23,10 +23,10 @@ class CustomerManageController extends Controller
 
     public function edit(Customer $customerManage)
     {
-         $customerManage->last_active_at = now();
+        $customerManage->last_active_at = now();
         return view('admin.customers.edit', compact('customerManage'));
     }
-     public function indexDeposit($customerId)
+    public function indexDeposit($customerId)
     {
         $deposits = Deposit::where('customer_id', $customerId)->get();
         $customer = Customer::findOrFail($customerId);
@@ -54,7 +54,7 @@ class CustomerManageController extends Controller
         return redirect()->route('customer-manage.index')
             ->with('success', 'Thông tin khách hàng đã được cập nhật thành công.');
     }
-       public function storeDeposit(Request $request)
+    public function storeDeposit(Request $request)
     {
         $request->validate([
             'customer_id' => 'required|exists:customers,id',
@@ -89,4 +89,19 @@ class CustomerManageController extends Controller
 
         return redirect()->route('customer-manage.index')->with('success', 'Giao dịch đã được thực hiện thành công.');
     }
+    public function destroy($id)
+    {
+        $customer = Customer::findOrFail($id);
+
+        // Xóa các dữ liệu liên quan nếu cần
+        $customer->loginHistories()->delete(); // Xóa lịch sử đăng nhập
+        $customer->orders()->delete(); // Xóa tất cả các đơn hàng của khách hàng nếu có quan hệ orders
+
+        // Xóa khách hàng
+        $customer->delete();
+
+        // Chuyển hướng với thông báo thành công
+        return redirect()->route('customer-manage.index')->with('success', 'Khách hàng đã được xóa thành công.');
+    }
+
 }

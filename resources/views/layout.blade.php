@@ -151,74 +151,82 @@
 
 
                         @if (Auth::guard('customer')->check())
-                            <!-- Menu thả xuống khi đã đăng nhập -->
-                            <div class="user-details">
-                                Số dư: <span
-                                    class="total-load">{{ number_format(Auth::guard('customer')->user()->Balance, 0, ',', '.') }}
-                                    VND</span>
-                            </div>
-                            <li class="dropdown dropdown-animated scale-left">
+                                                <!-- Menu thả xuống khi đã đăng nhập -->
+                                                <div class="user-details">
+                                                    Số dư: <span
+                                                        class="total-load">{{ number_format(Auth::guard('customer')->user()->Balance, 0, ',', '.') }}
+                                                        VND</span>
+                                                </div>
+                                                <li class="dropdown dropdown-animated scale-left">
 
-                                <div class="pointer" data-toggle="dropdown">
-                                    <div class="avatar avatar-image m-h-10 m-r-15">
-                                        <img src="{{ asset('imgs/verify-user.svg') }}" width="48" height="48" alt="User" />
-                                    </div>
-                                </div>
+                                                    <div class="pointer" data-toggle="dropdown">
+                                                        <div class="avatar avatar-image m-h-10 m-r-15">
+                                                            <img src="{{ asset('imgs/verify-user.svg') }}" width="48" height="48" alt="User" />
+                                                        </div>
+                                                    </div>
 
-                                <div class="p-b-15 p-t-20 dropdown-menu pop-profile">
-                                    <div class="p-h-20 p-b-15 m-b-10 border-bottom">
-                                        <div class="d-flex m-r-50">
-                                            <div class="avatar avatar-lg avatar-image">
-                                                <img src="{{ asset('imgs/verify-user.svg') }}" width="48" height="48"
-                                                    alt="User" />
-                                            </div>
-                                            <div class="m-l-10">
-                                                <p class="m-b-0 text-dark font-weight-semibold">
-                                                    {{ Auth::guard('customer')->user()->name ?? 'Tên người dùng' }}
-                                                </p>
-                                                <p class="m-b-0 opacity-07">KHÁCH HÀNG</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <a href="{{ route('profile.site') }}" class="dropdown-item d-block p-h-15 p-v-10">
-                                        <div class="d-flex align-items-center justify-content-between">
-                                            <div>
-                                                <i class="anticon opacity-04 font-size-16 anticon-user"></i>
-                                                <span class="m-l-10">Sửa hồ sơ</span>
-                                            </div>
-                                            <i class="anticon font-size-10 anticon-right"></i>
-                                        </div>
-                                    </a>
-                                    <a href="{{route('checkout')}}" class="dropdown-item d-block p-h-15 p-v-10">
-                                        <div class="d-flex align-items-center justify-content-between">
-                                            <div>
-                                                <i class="anticon opacity-04 font-size-16 anticon-lock"></i>
-                                                <span class="m-l-10">Nạp tiền</span>
-                                            </div>
-                                            <i class="anticon font-size-10 anticon-right"></i>
-                                        </div>
-                                    </a>
-                                    <a href="{{ route('profile.site') }}" class="dropdown-item d-block p-h-15 p-v-10">
-                                        <div class="d-flex align-items-center justify-content-between">
-                                            <div>
-                                                <i class="anticon opacity-04 font-size-16 anticon-project"></i>
-                                                <span class="m-l-10">Đổi mật khẩu</span>
-                                            </div>
-                                            <i class="anticon font-size-10 anticon-right"></i>
-                                        </div>
-                                    </a>
-                                    <a href="#" onclick="event.preventDefault();
-                                                                                                if (confirm('Bạn có muốn đăng xuất?')) {
-                                                                                                    document.getElementById('logout-form').submit();
-                                                                                                }">
-                                        Thoát
-                                    </a>
-                                    <form id="logout-form" action="{{ route('logout.customer') }}" method="POST"
-                                        style="display: none;">
-                                        @csrf
-                                    </form>
-                                </div>
-                            </li>
+                                                    <div class="p-b-15 p-t-20 dropdown-menu pop-profile">
+                                                        <div class="p-h-20 p-b-15 m-b-10 border-bottom">
+                                                            <div class="d-flex m-r-50">
+                                                                <div class="avatar avatar-lg avatar-image">
+                                                                    <img src="{{ asset('imgs/verify-user.svg') }}" width="48" height="48"
+                                                                        alt="User" />
+                                                                </div>
+                                                                <div class="m-l-10">
+                                                                    <p class="m-b-0 text-dark font-weight-semibold">
+                                                                        {{ Auth::guard('customer')->user()->name ?? 'Tên người dùng' }}
+                                                                    </p>
+                                                                    <p class="m-b-0 opacity-07">KHÁCH HÀNG</p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <a href="{{ route('profile.site') }}" class="dropdown-item d-block p-h-15 p-v-10">
+                                                            <div class="d-flex align-items-center justify-content-between">
+                                                                <div>
+                                                                    <i class="anticon opacity-04 font-size-16 anticon-user"></i>
+                                                                    <span class="m-l-10">Sửa hồ sơ</span>
+                                                                </div>
+                                                                <i class="anticon font-size-10 anticon-right"></i>
+                                                            </div>
+                                                        </a>
+                                                        <a href="{{route('checkout')}}" class="dropdown-item d-block p-h-15 p-v-10">
+                                                            <div class="d-flex align-items-center justify-content-between">
+                                                                <div>
+                                                                    <i class="anticon opacity-04 font-size-16 anticon-lock"></i>
+                                                                    <span class="m-l-10">Nạp tiền</span>
+                                                                </div>
+                                                                <i class="anticon font-size-10 anticon-right"></i>
+                                                            </div>
+                                                        </a>
+                                                        <a href="{{ route('profile.site') }}" class="dropdown-item d-block p-h-15 p-v-10">
+                                                            <div class="d-flex align-items-center justify-content-between">
+                                                                <div>
+                                                                    <i class="anticon opacity-04 font-size-16 anticon-project"></i>
+                                                                    <span class="m-l-10">Đổi mật khẩu</span>
+                                                                </div>
+                                                                <i class="anticon font-size-10 anticon-right"></i>
+                                                            </div>
+                                                        </a>
+                                                        <a href="#" class="dropdown-item d-block p-h-15 p-v-10" onclick="event.preventDefault();
+                            if (confirm('Bạn có muốn đăng xuất?')) {
+                                document.getElementById('logout-form').submit();
+                            }">
+                                                            <div class="d-flex align-items-center justify-content-between">
+                                                                <div>
+                                                                    <i class="anticon opacity-04 font-size-16 anticon-logout"></i>
+                                                                    <span class="m-l-10">Thoát</span>
+                                                                </div>
+                                                                <i class="anticon font-size-10 anticon-right"></i>
+                                                            </div>
+                                                        </a>
+
+                                                        <!-- Form Đăng xuất ẩn -->
+                                                        <form id="logout-form" action="{{ route('logout.customer') }}" method="POST"
+                                                            style="display: none;">
+                                                            @csrf
+                                                        </form>
+                                                    </div>
+                                                </li>
                         @else
                             <!-- Nút mở Modal -->
                             <button class="btn" id="registerBtn">Đăng ký</button>
@@ -479,7 +487,7 @@
     </div>
 
 
-    <a href="{{$layout_info->url_facebook}}" id="linkzalo" target="_blank" rel="noopener noreferrer">
+    {{-- <a href="{{$layout_info->url_facebook}}" id="linkzalo" target="_blank" rel="noopener noreferrer">
         <div id="fcta-zalo-tracking" class="fcta-zalo-mess">
             <span id="fcta-zalo-tracking">Support Now</span>
         </div>
@@ -491,7 +499,7 @@
                 <div id="fcta-zalo-tracking" class="fcta-zalo-text"></div>
             </div>
         </div>
-    </a>
+    </a> --}}
 
     <!-- alertModal -->
     <div id="alertModal" class="modal modal-fixed-top fade" role="dialog">
@@ -578,34 +586,35 @@
     <script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
-  <!-- Hiển thị Toast nếu có nhiều lỗi -->
-@if(session('errors') && is_array(session('errors')))
-    <script>
-        $(document).ready(function () {
-            @foreach (session('errors') as $error)
-                toastr.error("{{ $error }}", "Lỗi!");
-            @endforeach
-        });
-    </script>
-@endif
+    <!-- Hiển thị Toast nếu có nhiều lỗi -->
+    @if(session('errors') && is_array(session('errors')))
+        <script>
+            $(document).ready(function () {
+                @foreach (session('errors') as $error)
+                    toastr.error("{{ $error }}", "Lỗi!");
+                @endforeach
+                    });
+        </script>
+    @endif
 
-<!-- Hiển thị Toast nếu có một lỗi duy nhất -->
-@if(session('error'))
-    <script>
-        $(document).ready(function () {
-            toastr.error("{{ session('error') }}", "Lỗi!");
-        });
-    </script>
-@endif
+    <!-- Hiển thị Toast nếu có một lỗi duy nhất -->
+    @if(session('error'))
+        <script>
+            $(document).ready(function () {
+                toastr.error("{{ session('error') }}", "Lỗi!");
+            });
+        </script>
+    @endif
 
-<!-- Hiển thị Toast nếu có thông báo thành công -->
-@if(session('success'))
-    <script>
-        $(document).ready(function () {
-            toastr.success("{{ session('success') }}", "Thành công!");
-        });
-    </script>
-@endif
+    <!-- Hiển thị Toast nếu có thông báo thành công -->
+    @if(session('success'))
+        <script>
+            $(document).ready(function () {
+                toastr.success("{{ session('success') }}", "Thành công!");
+            });
+        </script>
+    @endif
+    <script src="{{ asset('js/main.js') }}"></script>
 </body>
 
 </html>

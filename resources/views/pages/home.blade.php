@@ -45,7 +45,7 @@
                                 <tbody>
                                     @foreach($subcategory->products as $product)
                                         <tr class="{{ $product->quantity > 0 ? 'c_pointer' : '' }}">
-                                            <td> <img src="{{ asset('storage/' . $product->image) }}" alt="" height="15"></td>
+                                            <td> <img src="{{ asset('storage/' . $product->image) }}" alt="" height="15" width="15"></td>
                                             <td>
 
                                                 {{ $product->name }}
