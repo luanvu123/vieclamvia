@@ -16,9 +16,9 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach ($subcategories as $subcategory)
+                @foreach ($subcategories as $key=> $subcategory)
                     <tr>
-                        <td>{{ $subcategory->id }}</td>
+                        <td>{{ $key }}</td>
                         <td>{{ $subcategory->name }}</td>
                         <td>{{ $subcategory->category->name }}</td>
                         <td>{{ $subcategory->status == 'active' ? 'Hoạt động' : 'Không hoạt động' }}</td>

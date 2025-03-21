@@ -24,9 +24,9 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($supports as $support)
+                    @foreach ($supports as $key=> $support)
                         <tr>
-                            <td>{{ $support->id }}</td>
+                            <td>{{ $key }}</td>
                             <td>{{ $support->name }}</td>
                             <td>
                                 @if($support->logo)

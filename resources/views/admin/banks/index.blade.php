@@ -15,9 +15,9 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach($banks as $bank)
+                @foreach($banks as $key=> $bank)
                     <tr>
-                        <td>{{ $bank->id }}</td>
+                        <td>{{ $key }}</td>
                         <td>{{ $bank->account_number }}</td>
                         <td>{{ $bank->name }}</td>
                         <td>{{ $bank->status }}</td>

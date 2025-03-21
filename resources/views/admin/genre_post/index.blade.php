@@ -28,9 +28,9 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach($genrePosts as $genrePost)
+                @foreach($genrePosts as $key=> $genrePost)
                 <tr>
-                    <td>{{ $genrePost->id }}</td>
+                    <td>{{ $key }}</td>
                     <td>{{ $genrePost->name }}</td>
                     <td>
                         <span class="badge {{ $genrePost->status == 'active' ? 'bg-success' : 'bg-danger' }}">
@@ -57,7 +57,7 @@
             </tbody>
         </table>
     </div>
- 
+
 </div>
 @stop
 

@@ -176,7 +176,7 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
                                 </li>
                                   <li class="treeview {{ Request::is('product*') ? 'active' : '' }}">
                                     <a href="{{ route('product.index') }}">
-                                        <img src="{{ asset('backend_admin/images/candidate-for-elections-svgrepo-com.svg') }}"
+                                        <img src="{{ asset('backend_admin/images/order-1-svgrepo-com.svg') }}"
                                             alt="Google" width="20" height="20">
                                         <span> Quản lý gian hàng</span>
                                     </a>
@@ -332,7 +332,8 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
                          <a href="{{ route('customer-manage.index') }}" style="text-decoration: none; color: inherit;">
                           <div class="col-md-3 widget widget1">
                             <div class="r3_counter_box">
-                                <i class="pull-left fa fa-dollar icon-rounded"></i>
+
+                                  <i class="pull-left fa fa-users dollar2 icon-rounded"></i>
                                 <div class="stats">
                                     <h5><strong>{{ $layout_customer }}</strong></h5>
                                     <span>Khách hàng</span>
@@ -345,7 +346,8 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
                         <a href="{{ route('order-manage.index') }}" style="text-decoration: none; color: inherit;">
                             <div class="col-md-3 widget widget1">
                                 <div class="r3_counter_box">
-                                    <i class="pull-left fa fa-laptop user1 icon-rounded"></i>
+
+                                       <i class="pull-left fa fa-dollar icon-rounded"></i>
                                     <div class="stats">
                                         <h5><strong>{{ $layout_order }}</strong></h5>
                                         <span>Đơn hàng</span>
@@ -378,7 +380,7 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
                           <a href="{{ route('product.index') }}" style="text-decoration: none; color: inherit;">
                             <div class="col-md-3 widget">
                                 <div class="r3_counter_box">
-                                    <i class="pull-left fa fa-users dollar2 icon-rounded"></i>
+ <i class="pull-left fa fa-laptop user1 icon-rounded"></i>
                                     <div class="stats">
                                         <h5><strong>{{ $layout_product }}</strong></h5>
                                         <span>Sản phẩm</span>

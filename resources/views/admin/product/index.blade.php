@@ -20,9 +20,9 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach($products as $product)
+                @foreach($products as $key=> $product)
                     <tr>
-                        <td>{{ $product->id }}</td>
+                        <td>{{ $key }}</td>
                         <td>{{ $product->name }}</td>
                         <td><img src="{{ asset('storage/' . $product->image) }}" width="50"></td>
                         <td>

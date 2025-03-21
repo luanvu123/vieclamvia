@@ -19,9 +19,9 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($users as $user)
+                        @foreach ($users as $key=> $user)
                             <tr>
-                                <td>{{ $user->id }}</td>
+                                <td>{{ $key }}</td>
                                 <td>{{ $user->name }}</td>
                                 <td>{{ $user->email }}</td>
                                 <td>
@@ -50,5 +50,5 @@
             </div>
         </div>
     </div>
-  
+
 @endsection

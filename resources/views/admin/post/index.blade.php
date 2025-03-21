@@ -30,9 +30,9 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach($posts as $post)
+                @foreach($posts as $key=> $post)
                 <tr>
-                    <td>{{ $post->id }}</td>
+                    <td>{{ $key }}</td>
                     <td>
                         @if($post->image)
                             <img src="{{ asset('storage/' . $post->image)}}" alt="{{ $post->name }}"

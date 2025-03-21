@@ -62,6 +62,9 @@
                                     <a href="{{ route('customer-manage.deposits', $customer->id) }}"
                                         class="btn btn-info btn-sm">
                                         <i class="fas fa-history"></i> Lịch sử giao dịch
+                                        @if($customer->new_deposits_count > 0)
+                                            <span class="badge badge-danger ml-1">{{ $customer->new_deposits_count }}</span>
+                                        @endif
                                     </a>
                                     <form action="{{ route('customer-manage.destroy', $customer->id) }}" method="POST"
                                         style="display: inline-block;"

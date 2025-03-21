@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -60,20 +61,26 @@ class Customer extends Authenticatable
     {
         return $this->belongsTo(TypeCustomer::class, 'type_customer_id');
     }
-// Trong class Customer
-public function orders()
-{
-    return $this->hasMany(Order::class);
-}
- public function deposits(): HasMany
+    // Trong class Customer
+    public function orders()
+    {
+        return $this->hasMany(Order::class);
+    }
+    public function deposits(): HasMany
     {
         return $this->hasMany(Deposit::class);
     }
- public function totalDeposit()
+    public function totalDeposit()
     {
         return $this->deposits()
-                    ->where('type', 'nạp tiền')
-                    ->where('status', 'thành công')
-                    ->sum('money');
+            ->where('type', 'nạp tiền')
+            ->where('status', 'thành công')
+            ->sum('money');
+    }
+    public function getNewDepositsCountAttribute(): int
+    {
+        return $this->deposits()
+            ->where('created_at', '>=', Carbon::now()->subHours(24))
+            ->count();
     }
 }
